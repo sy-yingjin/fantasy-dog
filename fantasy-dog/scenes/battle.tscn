@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cxiq85h1q50yu"]
+[gd_scene load_steps=7 format=3 uid="uid://cxiq85h1q50yu"]
 
 [ext_resource type="PackedScene" uid="uid://imjs4c2tpwnk" path="res://scenes/dogKnight.tscn" id="1_uqnng"]
 [ext_resource type="Texture2D" uid="uid://b2t2nbpvgb1f6" path="res://assets/BG.png" id="1_y58lw"]
 [ext_resource type="PackedScene" uid="uid://csoh6fryr1yhx" path="res://scenes/dogMage.tscn" id="2_e5ao0"]
 [ext_resource type="PackedScene" uid="uid://djr46d25fmfbg" path="res://scenes/options.tscn" id="3_u0u4c"]
 [ext_resource type="Texture2D" uid="uid://b07jkol5eixhu" path="res://assets/sprite_boss.png" id="4_usg7g"]
+[ext_resource type="PackedScene" uid="uid://c2qyadbji4u11" path="res://scenes/menu_cursor.tscn" id="6_nk6e2"]
 
 [node name="Battle" type="Control"]
 layout_mode = 3
@@ -51,3 +52,10 @@ offset_right = 1013.0
 offset_bottom = 789.0
 theme_override_font_sizes/font_size = 60
 text = "WHAT IS HAPPNEING ?"
+
+[node name="MenuCursor" parent="." instance=ExtResource("6_nk6e2")]
+layout_mode = 1
+offset_left = 80.0
+offset_top = 856.0
+offset_right = -1492.0
+offset_bottom = -176.0
