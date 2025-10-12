@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://cxiq85h1q50yu"]
+
+[ext_resource type="PackedScene" uid="uid://imjs4c2tpwnk" path="res://scenes/dogKnight.tscn" id="1_uqnng"]
+[ext_resource type="Texture2D" uid="uid://b2t2nbpvgb1f6" path="res://assets/BG.png" id="1_y58lw"]
+[ext_resource type="PackedScene" uid="uid://csoh6fryr1yhx" path="res://scenes/dogMage.tscn" id="2_e5ao0"]
+[ext_resource type="PackedScene" uid="uid://djr46d25fmfbg" path="res://scenes/options.tscn" id="3_u0u4c"]
+[ext_resource type="Texture2D" uid="uid://b07jkol5eixhu" path="res://assets/sprite_boss.png" id="4_usg7g"]
+
+[node name="Battle" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="Sprite2D" parent="."]
+position = Vector2(811, 541)
+texture = ExtResource("1_y58lw")
+
+[node name="Mage" parent="." instance=ExtResource("2_e5ao0")]
+position = Vector2(216, 512)
+
+[node name="knight" parent="." instance=ExtResource("1_uqnng")]
+position = Vector2(456, 488)
+
+[node name="Options" parent="." instance=ExtResource("3_u0u4c")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -757.0
+offset_top = -280.0
+offset_right = 203.0
+offset_bottom = -70.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1190, 432)
+scale = Vector2(4.375, 4.375)
+texture = ExtResource("4_usg7g")
+
+[node name="Action Declare" type="Label" parent="."]
+layout_mode = 0
+offset_left = 53.0
+offset_top = 719.0
+offset_right = 1013.0
+offset_bottom = 789.0
+theme_override_font_sizes/font_size = 60
+text = "WHAT IS HAPPNEING ?"

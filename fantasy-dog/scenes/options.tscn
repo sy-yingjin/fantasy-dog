@@ -1,0 +1,187 @@
+[gd_scene load_steps=4 format=3 uid="uid://djr46d25fmfbg"]
+
+[ext_resource type="Theme" uid="uid://bro3mxwd07mof" path="res://assets/button.tres" id="1_10mnn"]
+[ext_resource type="Texture2D" uid="uid://c0gjgegn0f73m" path="res://assets/RPG-Menu-scroll.png" id="1_diy7m"]
+[ext_resource type="Texture2D" uid="uid://t0ibppus8a5i" path="res://assets/RPG-Menu.png" id="1_jpr44"]
+
+[node name="Options" type="HBoxContainer"]
+custom_minimum_size = Vector2(960, 210)
+offset_left = 80.0
+offset_top = 704.0
+offset_right = 1040.0
+offset_bottom = 912.0
+theme_override_constants/separation = 9
+
+[node name="scrollBG" type="Sprite2D" parent="."]
+position = Vector2(735.186, 128)
+scale = Vector2(0.845531, 0.88)
+texture = ExtResource("1_diy7m")
+
+[node name="bookBG" type="Sprite2D" parent="."]
+position = Vector2(227, 112)
+scale = Vector2(0.847788, 0.799375)
+texture = ExtResource("1_jpr44")
+
+[node name="Actions" type="NinePatchRect" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="CharacterName" type="Label" parent="Actions"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 8.0
+offset_right = 232.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "NAME"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Actions"]
+custom_minimum_size = Vector2(200, 150)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -150.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="attack" type="Button" parent="Actions/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_10mnn")
+text = "Attack"
+
+[node name="defend" type="Button" parent="Actions/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_10mnn")
+text = "Defend"
+
+[node name="item" type="Button" parent="Actions/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_10mnn")
+text = "???Bag"
+
+[node name="SubActions" type="NinePatchRect" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubActions"]
+custom_minimum_size = Vector2(200, 150)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -113.5
+offset_top = -75.0
+offset_right = 113.5
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="action1" type="Button" parent="SubActions/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_10mnn")
+text = "Action1"
+
+[node name="act1-desc" type="Label" parent="SubActions/VBoxContainer"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "Actiion 1 Description blah blah"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="action2" type="Button" parent="SubActions/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_10mnn")
+text = "Action2"
+
+[node name="act2-desc" type="Label" parent="SubActions/VBoxContainer"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "Actiion 1 Description blah blah"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="All Characters" type="NinePatchRect" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.14
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="All Characters"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -165.0
+offset_right = -35.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 15
+
+[node name="Hero" type="Label" parent="All Characters/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "HIROE"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="All Characters/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 15
+
+[node name="Health" type="ProgressBar" parent="All Characters/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="Mana" type="ProgressBar" parent="All Characters/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="Mage" type="Label" parent="All Characters/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "MAYGE"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="All Characters/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 15
+
+[node name="Health" type="ProgressBar" parent="All Characters/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="Mana" type="ProgressBar" parent="All Characters/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2

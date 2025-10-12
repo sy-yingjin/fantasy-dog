@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://csoh6fryr1yhx"]
+
+[ext_resource type="Texture2D" uid="uid://bya0wqr6miiin" path="res://assets/sprite_character-idles.png" id="1_utg1a"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhv88"]
+atlas = ExtResource("1_utg1a")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6cfce"]
+atlas = ExtResource("1_utg1a")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iidlh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xhv88")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6cfce")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[node name="Mage" type="Node2D"]
+scale = Vector2(5, 5)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_iidlh")
+autoplay = "default"
