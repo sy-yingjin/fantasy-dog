@@ -2,9 +2,9 @@ extends Node
 # this is the state machine that will handle 
 # states and transitions of the UI menu / action selection
 
-@export
-var starting_state: State
+@export var starting_state: State
 var current_state: State
+var states: Dictionary = {}
 
 # initializing the state machine by giving each child state 
 # a reference to parent object it belongs to and enter 

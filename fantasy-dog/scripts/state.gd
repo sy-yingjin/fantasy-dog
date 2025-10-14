@@ -1,11 +1,12 @@
 class_name State
 extends Node
 
+@onready var state_machine = StateMachine
 
 # hold a reference to the parent so that it can be controlled by the state
-var parent: Control
 
-func enter(player: Player) -> void:
+func enter() -> void:
+	#var character = get_node("Knight")
 	pass
 	
 func exit() -> void:

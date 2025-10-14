@@ -24,7 +24,7 @@ animations = [{
 "speed": 4.0
 }]
 
-[node name="knight" type="Node2D"]
+[node name="knight" type="Node2D" groups=["Players"]]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(5, 5)

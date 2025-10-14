@@ -1,12 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://djr46d25fmfbg"]
+[gd_scene load_steps=7 format=3 uid="uid://djr46d25fmfbg"]
 
 [ext_resource type="Theme" uid="uid://bro3mxwd07mof" path="res://assets/button.tres" id="1_10mnn"]
 [ext_resource type="Texture2D" uid="uid://c0gjgegn0f73m" path="res://assets/RPG-Menu-scroll.png" id="1_diy7m"]
 [ext_resource type="Texture2D" uid="uid://t0ibppus8a5i" path="res://assets/RPG-Menu.png" id="1_jpr44"]
 [ext_resource type="Script" path="res://scenes/container.gd" id="2_w1k88"]
+[ext_resource type="Script" path="res://scripts/StateMachine.gd" id="4_do7hj"]
+[ext_resource type="Script" path="res://scripts/attack.gd" id="5_102nt"]
 
 [node name="Options" type="Control"]
 layout_mode = 3
+anchors_preset = 0
 offset_right = 1120.0
 offset_bottom = 210.0
 
@@ -98,6 +101,12 @@ theme_override_constants/separation = 26
 alignment = 1
 script = ExtResource("2_w1k88")
 
+[node name="StateMachine" type="Node" parent="Container"]
+script = ExtResource("4_do7hj")
+
+[node name="AttackState" type="Node" parent="Container/StateMachine"]
+script = ExtResource("5_102nt")
+
 [node name="Actions" type="Control" parent="Container"]
 custom_minimum_size = Vector2(210, 150)
 layout_mode = 2
@@ -188,3 +197,6 @@ theme_override_font_sizes/font_size = 16
 text = "Actiion 1 Description blah blah"
 horizontal_alignment = 1
 autowrap_mode = 2
+
+[connection signal="focus_entered" from="Container/Actions" to="Container/StateMachine/AttackState" method="_on_actions_focus_entered"]
+[connection signal="focus_entered" from="Container/Actions/VBoxContainer" to="Container/StateMachine/AttackState" method="_on_v_box_container_focus_entered"]
