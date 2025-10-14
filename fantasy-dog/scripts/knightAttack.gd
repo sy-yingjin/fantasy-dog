@@ -14,11 +14,11 @@ func physics_update(delta):
 	for child in v_box_container.get_children():
 		if child is Button:
 			# attack button
-			child.text = character.get_Act(1, i)
+			child.text = character.get_Act(i)
 			i += 1
 		else: 
 			# description of attack
-			child.text = character.get_ActDesc(1, i-1)
+			child.text = character.get_ActDesc(i-1)
 	
 func handle_input(event):
 	if Input.is_action_just_pressed("ui_accept"):
