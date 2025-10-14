@@ -55,7 +55,7 @@ text = "WHAT IS HAPPNEING ?"
 
 [node name="MenuCursor" parent="." instance=ExtResource("6_nk6e2")]
 layout_mode = 1
-offset_left = 80.0
-offset_top = 856.0
-offset_right = -1492.0
-offset_bottom = -176.0
+offset_left = 88.0
+offset_top = 867.0
+offset_right = -1484.0
+offset_bottom = -165.0
