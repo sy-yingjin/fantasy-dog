@@ -1,11 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://cxiq85h1q50yu"]
+[gd_scene load_steps=9 format=3 uid="uid://cxiq85h1q50yu"]
 
 [ext_resource type="PackedScene" uid="uid://imjs4c2tpwnk" path="res://scenes/dogKnight.tscn" id="1_uqnng"]
 [ext_resource type="Texture2D" uid="uid://b2t2nbpvgb1f6" path="res://assets/BG.png" id="1_y58lw"]
 [ext_resource type="PackedScene" uid="uid://csoh6fryr1yhx" path="res://scenes/dogMage.tscn" id="2_e5ao0"]
-[ext_resource type="PackedScene" uid="uid://djr46d25fmfbg" path="res://scenes/options.tscn" id="3_u0u4c"]
+[ext_resource type="PackedScene" uid="uid://djr46d25fmfbg" path="res://scenes/menu.tscn" id="3_u0u4c"]
 [ext_resource type="Texture2D" uid="uid://b07jkol5eixhu" path="res://assets/sprite_boss.png" id="4_usg7g"]
 [ext_resource type="PackedScene" uid="uid://c2qyadbji4u11" path="res://scenes/menu_cursor.tscn" id="6_nk6e2"]
+[ext_resource type="Texture2D" uid="uid://bfi1jffe725xt" path="res://assets/RPG-arrow.png" id="7_3fkkd"]
+[ext_resource type="Script" path="res://scripts/character_arrow.gd" id="8_ir0j4"]
 
 [node name="Battle" type="Control"]
 layout_mode = 3
@@ -22,27 +24,31 @@ texture = ExtResource("1_y58lw")
 [node name="Mage" parent="." instance=ExtResource("2_e5ao0")]
 position = Vector2(216, 512)
 
-[node name="knight" parent="." instance=ExtResource("1_uqnng")]
+[node name="Knight" parent="." instance=ExtResource("1_uqnng")]
 position = Vector2(456, 488)
 
-[node name="Options" parent="." instance=ExtResource("3_u0u4c")]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -757.0
-offset_top = -280.0
-offset_right = 203.0
-offset_bottom = -70.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="boss place holder" type="Sprite2D" parent="."]
 position = Vector2(1190, 432)
 scale = Vector2(4.375, 4.375)
 texture = ExtResource("4_usg7g")
+
+[node name="Options" parent="." instance=ExtResource("3_u0u4c")]
+offset_left = 55.0
+offset_top = 800.0
+offset_right = 1175.0
+offset_bottom = 1010.0
+
+[node name="Health" parent="Options/All Characters/StatusList/HeroStatus" index="0" node_paths=PackedStringArray("player")]
+player = NodePath("../../../../../Knight")
+
+[node name="Mana" parent="Options/All Characters/StatusList/HeroStatus" index="1" node_paths=PackedStringArray("player")]
+player = NodePath("../../../../../Knight")
+
+[node name="Health" parent="Options/All Characters/StatusList/MageStatus" index="0" node_paths=PackedStringArray("player")]
+player = NodePath("../../../../../Mage")
+
+[node name="Mana" parent="Options/All Characters/StatusList/MageStatus" index="1" node_paths=PackedStringArray("player")]
+player = NodePath("../../../../../Mage")
 
 [node name="Action Declare" type="Label" parent="."]
 layout_mode = 0
@@ -59,3 +65,28 @@ offset_left = 88.0
 offset_top = 867.0
 offset_right = -1484.0
 offset_bottom = -165.0
+
+[node name="Character Arrow" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+scale = Vector2(5, 5)
+texture = ExtResource("7_3fkkd")
+script = ExtResource("8_ir0j4")
+
+[node name="controls instruction" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -257.0
+offset_top = -120.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 40
+text = "x for enter
+c for cancel"
+
+[editable path="Options"]

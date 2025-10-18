@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://csoh6fryr1yhx"]
+[gd_scene load_steps=7 format=3 uid="uid://csoh6fryr1yhx"]
 
+[ext_resource type="Script" path="res://scripts/dog_mage.gd" id="1_578kg"]
 [ext_resource type="Texture2D" uid="uid://bya0wqr6miiin" path="res://assets/sprite_character-idles.png" id="1_utg1a"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="2_6pkln"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xhv88"]
 atlas = ExtResource("1_utg1a")
@@ -26,7 +28,11 @@ animations = [{
 
 [node name="Mage" type="Node2D" groups=["Players"]]
 scale = Vector2(5, 5)
+script = ExtResource("1_578kg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_iidlh")
 autoplay = "default"
+
+[node name="Player" type="Node" parent="."]
+script = ExtResource("2_6pkln")

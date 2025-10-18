@@ -1,9 +1,8 @@
 class_name State
 extends Node
 
-@onready var state_machine = StateMachine
-
 # hold a reference to the parent so that it can be controlled by the state
+var parent: Control
 
 func enter() -> void:
 	#var character = get_node("Knight")
@@ -18,5 +17,5 @@ func process_input(event: InputEvent) -> State:
 func process_frame(delta: float) -> State:
 	return null
 	
-func physics_process(delta: float) -> State:
+func process_physics(delta: float) -> State:
 	return null

@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://imjs4c2tpwnk"]
+[gd_scene load_steps=7 format=3 uid="uid://imjs4c2tpwnk"]
 
+[ext_resource type="Script" path="res://scenes/dog_knight.gd" id="1_34nj8"]
 [ext_resource type="Texture2D" uid="uid://bya0wqr6miiin" path="res://assets/sprite_character-idles.png" id="1_xkjrn"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="3_pueut"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k7hfj"]
 atlas = ExtResource("1_xkjrn")
@@ -24,10 +26,14 @@ animations = [{
 "speed": 4.0
 }]
 
-[node name="knight" type="Node2D" groups=["Players"]]
+[node name="Knight" type="Node2D" groups=["Players"]]
+script = ExtResource("1_34nj8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_k2udk")
 autoplay = "default"
 frame_progress = 0.997678
+
+[node name="Player" type="Node" parent="."]
+script = ExtResource("3_pueut")

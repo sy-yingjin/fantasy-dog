@@ -1,30 +1,29 @@
-class_name Menu extends VBoxContainer
+extends Control
 
-signal button_focused(button)
-signal button_pressed(button)
+# code that shows the options UI
+
+@onready var options_state_machine: Node = $OptionsStateMachine
+@onready var character_name: Label = $Actions/CharacterName
 
 var index: int = 0
 
 func _ready() -> void:
-	get_buttons()
-	#for button in get_buttons():
-		#button_focused.connect(_on_button_pressed.bind(button))
-		#button_pressed.connect(_on_button_pressed().bind(button))
+	print("HEY ITS OPTIONS")
+	# initialize options state machine
+	character_name.text =  Global.current_player.get_character_name()
+	options_state_machine.init(self)
+	# displays the lists of actions and subactions
+	var actions = $Actions
+	actions.show()
+	var sub_actions = $SubActions
+	sub_actions.show()
+	
+func _unhandled_input(event: InputEvent) -> void:
+	options_state_machine.process_input(event)
+	
+func _physics_process(delta: float) -> void:
+	options_state_machine.process_physics(delta)
 
-func get_buttons() -> Array:
-	var buttons : Array[Button] = []
-	for child in get_children():
-		if child is Button:
-			buttons.append(child)
-	return buttons;
-	
-	
-func button_focus(n: int = index) -> void:
-	var button: BaseButton = get_buttons()[n]
-	button.grab_focus()
-	
-func _on_button_pressed(button: BaseButton) -> void:
-	emit_signal("button_pressed", button)
-
-func _on_focus_entered(button: BaseButton) -> void:
-	emit_signal("button_focused", button)
+func _process(delta: float) -> void:
+	character_name.text =  Global.current_player.get_character_name()
+	options_state_machine.process_frame(delta)

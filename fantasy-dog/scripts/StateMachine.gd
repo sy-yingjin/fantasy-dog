@@ -4,33 +4,35 @@ extends Node
 
 @export var starting_state: State
 var current_state: State
-var states: Dictionary = {}
 
-# initializing the state machine by giving each child state 
-# a reference to parent object it belongs to and enter 
-# default starting_state
+## initializing the state machine by giving each child state 
+## a reference to parent object it belongs to and enter 
+## default starting_state
+## parent is the control node that controls the UI menu
+#func _ready():
+	#print("")
+	
 
 func init(parent: Control) -> void:
 	for child in get_children():
 		child.parent = parent
-		
-	# initializing to the default state
 	change_state(starting_state)
+	print("STARTING STATE MACHINE")
 	
-# change to new state by exiting the previous state
+# change to the new state by first calling any exit logic on the current state.
 func change_state(new_state: State) -> void:
+	# exit current state 
 	if current_state:
 		current_state.exit()
+	# change new state
 	current_state = new_state
 	current_state.enter()
-
-# pass through functioins for the control UI to call
-# handling state changes as needed
-
-#func process_physics(delta: float) -> void:
-	#var new_state = current_state.process_input(delta)
-	## new state will be called based on the input event
 	
+## pass through functions ; handling state changes as needed.
+func process_physics(delta: float) -> void:
+	var new_state = current_state.process_physics(delta)
+	if new_state:
+		change_state(new_state)
 		
 func process_input(event: InputEvent) -> void:
 	var new_state = current_state.process_input(event)
@@ -38,6 +40,48 @@ func process_input(event: InputEvent) -> void:
 		change_state(new_state)
 		
 func process_frame(delta: float) -> void:
-	var new_state = current_state.process_input(delta)
+	var new_state = current_state.process_frame(delta)
 	if new_state:
 		change_state(new_state)
+
+
+
+
+
+
+
+#var states: Dictionary = {}
+#
+
+#
+#func init(parent: Control) -> void:
+	#for child in get_children():
+		#child.parent = parent
+		#
+	## initializing to the default state
+	#change_state(starting_state)
+	#
+## change to new state by exiting the previous state
+#func change_state(new_state: State) -> void:
+	#if current_state:
+		#current_state.exit()
+	#current_state = new_state
+	#current_state.enter()
+#
+## pass through functioins for the control UI to call
+## handling state changes as needed
+#
+##func process_physics(delta: float) -> void:
+	##var new_state = current_state.process_input(delta)
+	### new state will be called based on the input event
+	#
+		#
+#func process_input(event: InputEvent) -> void:
+	#var new_state = current_state.process_input(event)
+	#if new_state:
+		#change_state(new_state)
+		#
+#func process_frame(delta: float) -> void:
+	#var new_state = current_state.process_frame(delta)
+	#if new_state:
+		#change_state(new_state)

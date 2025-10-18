@@ -1,0 +1,319 @@
+[gd_scene load_steps=17 format=3 uid="uid://djr46d25fmfbg"]
+
+[ext_resource type="Theme" uid="uid://bro3mxwd07mof" path="res://assets/button.tres" id="1_10mnn"]
+[ext_resource type="Texture2D" uid="uid://c0gjgegn0f73m" path="res://assets/RPG-Menu-scroll.png" id="1_diy7m"]
+[ext_resource type="Texture2D" uid="uid://t0ibppus8a5i" path="res://assets/RPG-Menu.png" id="1_jpr44"]
+[ext_resource type="Script" path="res://scripts/options.gd" id="1_yhce5"]
+[ext_resource type="Texture2D" uid="uid://d83y3nmhp64c" path="res://assets/RPG-healthbar-BACK.png" id="2_fmw4n"]
+[ext_resource type="Texture2D" uid="uid://30uiot637dhq" path="res://assets/RPG-healthBar.png" id="3_h2ogj"]
+[ext_resource type="Script" path="res://scripts/StateMachine.gd" id="4_do7hj"]
+[ext_resource type="Script" path="res://scripts/bar.gd" id="4_sac4g"]
+[ext_resource type="Texture2D" uid="uid://clresi6ueu4ha" path="res://assets/RPG-manaBar.png" id="4_xi5jp"]
+[ext_resource type="Script" path="res://scripts/DefendState.gd" id="5_3vgal"]
+[ext_resource type="Script" path="res://scripts/AttackState.gd" id="5_5h4iy"]
+[ext_resource type="Script" path="res://scripts/SubAttack1.gd" id="6_ukufy"]
+[ext_resource type="Script" path="res://scripts/SubAttack2.gd" id="7_qfr2o"]
+[ext_resource type="Script" path="res://scripts/ItemState.gd" id="8_ti2ae"]
+[ext_resource type="Script" path="res://scripts/EnemyState.gd" id="9_m2ae8"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_acxuy"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1120.0
+offset_bottom = 210.0
+
+[node name="scrollBG" type="Sprite2D" parent="."]
+position = Vector2(752.814, 128)
+scale = Vector2(0.845531, 0.88)
+texture = ExtResource("1_diy7m")
+
+[node name="All Characters" type="NinePatchRect" parent="."]
+layout_mode = 2
+offset_left = 483.097
+offset_top = 7.99999
+offset_right = 1032.1
+offset_bottom = 218.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.14
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="StatusList" type="VBoxContainer" parent="All Characters"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -479.0
+offset_top = -178.0
+offset_right = -114.0
+offset_bottom = -13.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 15
+
+[node name="Hero" type="Label" parent="All Characters/StatusList"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.345098, 0.211765, 0.121569, 1)
+theme_override_font_sizes/font_size = 40
+text = "HIROW"
+
+[node name="HeroStatus" type="HBoxContainer" parent="All Characters/StatusList"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 15
+
+[node name="Health" type="TextureProgressBar" parent="All Characters/StatusList/HeroStatus"]
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 2
+nine_patch_stretch = true
+stretch_margin_left = 3
+stretch_margin_top = 3
+stretch_margin_right = 3
+stretch_margin_bottom = 3
+texture_under = ExtResource("2_fmw4n")
+texture_progress = ExtResource("3_h2ogj")
+script = ExtResource("4_sac4g")
+type = "HP"
+
+[node name="Mana" type="TextureProgressBar" parent="All Characters/StatusList/HeroStatus"]
+custom_minimum_size = Vector2(150, 20)
+layout_mode = 2
+nine_patch_stretch = true
+stretch_margin_left = 3
+stretch_margin_top = 3
+stretch_margin_right = 3
+stretch_margin_bottom = 3
+texture_under = ExtResource("2_fmw4n")
+texture_progress = ExtResource("4_xi5jp")
+script = ExtResource("4_sac4g")
+type = "MP"
+
+[node name="Mage" type="Label" parent="All Characters/StatusList"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.345098, 0.211765, 0.121569, 1)
+theme_override_font_sizes/font_size = 40
+text = "MAYGE"
+
+[node name="MageStatus" type="HBoxContainer" parent="All Characters/StatusList"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 15
+
+[node name="Health" type="TextureProgressBar" parent="All Characters/StatusList/MageStatus"]
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 2
+nine_patch_stretch = true
+stretch_margin_left = 3
+stretch_margin_top = 3
+stretch_margin_right = 3
+stretch_margin_bottom = 3
+texture_under = ExtResource("2_fmw4n")
+texture_progress = ExtResource("3_h2ogj")
+script = ExtResource("4_sac4g")
+type = "HP"
+
+[node name="Mana" type="TextureProgressBar" parent="All Characters/StatusList/MageStatus"]
+custom_minimum_size = Vector2(150, 20)
+layout_mode = 2
+nine_patch_stretch = true
+stretch_margin_left = 3
+stretch_margin_top = 3
+stretch_margin_right = 3
+stretch_margin_bottom = 3
+texture_under = ExtResource("2_fmw4n")
+texture_progress = ExtResource("4_xi5jp")
+script = ExtResource("4_sac4g")
+type = "MP"
+
+[node name="bookBG" type="Sprite2D" parent="."]
+position = Vector2(248, 112)
+scale = Vector2(0.847788, 0.799375)
+texture = ExtResource("1_jpr44")
+
+[node name="Options" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 496.0
+offset_bottom = 224.0
+theme_override_constants/separation = 26
+alignment = 1
+script = ExtResource("1_yhce5")
+
+[node name="Actions" type="Control" parent="Options"]
+custom_minimum_size = Vector2(210, 150)
+layout_mode = 2
+
+[node name="CharacterName" type="Label" parent="Options/Actions"]
+layout_mode = 2
+offset_left = 40.0
+offset_top = 16.0
+offset_right = 130.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(0.345098, 0.211765, 0.121569, 1)
+theme_override_font_sizes/font_size = 40
+text = "NAME"
+
+[node name="ActionList" type="VBoxContainer" parent="Options/Actions"]
+custom_minimum_size = Vector2(200, 150)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -150.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="attack" type="Button" parent="Options/Actions/ActionList"]
+layout_mode = 2
+theme = ExtResource("1_10mnn")
+theme_override_colors/font_color = Color(0.345098, 0.211765, 0.121569, 1)
+text = "Attack"
+
+[node name="defend" type="Button" parent="Options/Actions/ActionList"]
+layout_mode = 2
+theme = ExtResource("1_10mnn")
+theme_override_colors/font_color = Color(0.345098, 0.211765, 0.121569, 1)
+text = "Defend"
+
+[node name="item" type="Button" parent="Options/Actions/ActionList"]
+layout_mode = 2
+theme = ExtResource("1_10mnn")
+theme_override_colors/font_color = Color(0.345098, 0.211765, 0.121569, 1)
+text = "???Bag"
+
+[node name="OptionsStateMachine" type="Node" parent="Options" node_paths=PackedStringArray("starting_state")]
+script = ExtResource("4_do7hj")
+starting_state = NodePath("AttackState")
+
+[node name="AttackState" type="Node" parent="Options/OptionsStateMachine" node_paths=PackedStringArray("defend_state", "sub_attack1_state", "sub_attack2_state", "item_state")]
+script = ExtResource("5_5h4iy")
+defend_state = NodePath("../DefendState")
+sub_attack1_state = NodePath("../SubAttack1State")
+sub_attack2_state = NodePath("../SubAttack2State")
+item_state = NodePath("../ItemState")
+
+[node name="DefendState" type="Node" parent="Options/OptionsStateMachine" node_paths=PackedStringArray("attack_state", "item_state", "enemy_state")]
+script = ExtResource("5_3vgal")
+attack_state = NodePath("../AttackState")
+item_state = NodePath("../ItemState")
+enemy_state = NodePath("../EnemyState")
+
+[node name="EnemyState" type="Node" parent="Options/OptionsStateMachine" node_paths=PackedStringArray("attack_state")]
+script = ExtResource("9_m2ae8")
+attack_state = NodePath("../AttackState")
+
+[node name="ItemState" type="Node" parent="Options/OptionsStateMachine" node_paths=PackedStringArray("attack_state", "defend_state", "enemy_state")]
+script = ExtResource("8_ti2ae")
+attack_state = NodePath("../AttackState")
+defend_state = NodePath("../DefendState")
+enemy_state = NodePath("../EnemyState")
+
+[node name="SubAttack1State" type="Node" parent="Options/OptionsStateMachine" node_paths=PackedStringArray("attack_state", "defend_state", "item_state", "enemy_state", "sub_attack2_state")]
+script = ExtResource("6_ukufy")
+attack_state = NodePath("../AttackState")
+defend_state = NodePath("../DefendState")
+item_state = NodePath("../ItemState")
+enemy_state = NodePath("../EnemyState")
+sub_attack2_state = NodePath("../SubAttack2State")
+
+[node name="SubAttack2State" type="Node" parent="Options/OptionsStateMachine" node_paths=PackedStringArray("attack_state", "defend_state", "item_state", "enemy_state", "sub_attack1_state")]
+script = ExtResource("7_qfr2o")
+attack_state = NodePath("../AttackState")
+defend_state = NodePath("../DefendState")
+item_state = NodePath("../ItemState")
+enemy_state = NodePath("../EnemyState")
+sub_attack1_state = NodePath("../SubAttack1State")
+
+[node name="SubActions" type="Control" parent="Options"]
+custom_minimum_size = Vector2(210, 150)
+layout_mode = 2
+
+[node name="SubActionList" type="VBoxContainer" parent="Options/SubActions"]
+visible = false
+custom_minimum_size = Vector2(200, 150)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = -88.0
+offset_right = 90.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="action1" type="Button" parent="Options/SubActions/SubActionList"]
+layout_mode = 2
+theme = ExtResource("1_10mnn")
+theme_override_colors/font_color = Color(0.345098, 0.211765, 0.121569, 1)
+text = "Action1"
+
+[node name="act1-desc" type="Label" parent="Options/SubActions/SubActionList"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.521569, 0.407843, 0.333333, 1)
+theme_override_font_sizes/font_size = 18
+text = "Actiion 1 Description blah blah"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="action2" type="Button" parent="Options/SubActions/SubActionList"]
+layout_mode = 2
+theme = ExtResource("1_10mnn")
+theme_override_colors/font_color = Color(0.345098, 0.211765, 0.121569, 1)
+text = "Action2"
+
+[node name="act2-desc" type="Label" parent="Options/SubActions/SubActionList"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.521569, 0.407843, 0.333333, 1)
+theme_override_font_sizes/font_size = 18
+text = "Actiion 1 Description blah blah"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ItemDisplay" type="VBoxContainer" parent="Options/SubActions"]
+custom_minimum_size = Vector2(200, 150)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = -94.0
+offset_right = 90.0
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="act1-desc" type="Label" parent="Options/SubActions/ItemDisplay"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.345098, 0.211765, 0.121569, 1)
+theme_override_font_sizes/font_size = 18
+text = "Mytstery Bag of Surprise or Sabotage"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Options/SubActions/ItemDisplay"]
+position = Vector2(96, 112)
+scale = Vector2(152.25, 123.75)
+texture = SubResource("CanvasTexture_acxuy")

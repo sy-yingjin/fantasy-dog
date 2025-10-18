@@ -1,6 +1,6 @@
 extends TextureRect
 
-const OFFSET: Vector2 = Vector2(-8,12)
+const OFFSET: Vector2 = Vector2(-10,-3)
 
 var target: Node = null
 
