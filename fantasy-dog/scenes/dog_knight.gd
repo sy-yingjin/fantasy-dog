@@ -2,11 +2,14 @@ extends Player
 
 # link HP and MP bar from UI
 
+@onready var animated_sprite = $AnimatedSprite2D
+@onready var attack_sprite = $atk_effect
+
 func _ready() -> void:
 	# fill up the needed information of the dog knight
 	maxHP = 100
-	maxMP = 20
-	currentHP = 50 # bar testing 
+	maxMP = 50
+	currentHP = 50 # bar testing
 	currentMP = 10 # bar testing
 	player_name = "Hirow"
 	atk_1 = "Braver"
@@ -21,11 +24,24 @@ func _ready() -> void:
 
 	# add other features
 func attack(type: int) -> void:
-	#if type == 1:
+	if type == 1:
 		## do type 1 attack
+		print("DOING BASIC ATTACK - love, Knight")
+		attack_sprite.play("normal")
 		#pass
-	#else:
+	else:
 		## do type 2 attack
 		# updateBar.emit() to update MP bar in UI
-		#pass
-	pass
+		print("DOING STRONG ATTACK - love, Knight")
+		attack_sprite.play("strong")
+	
+	animated_sprite.play("attack")
+
+
+func defend() -> void:
+	animated_sprite.play("defend")
+
+func _process(type: float) -> void:
+	if Global.player_turn_end():
+		animated_sprite.play("default")
+		attack_sprite.play("default")

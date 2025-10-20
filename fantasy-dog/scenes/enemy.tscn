@@ -1,0 +1,84 @@
+[gd_scene load_steps=10 format=3 uid="uid://brhs7y7ot1vr0"]
+
+[ext_resource type="Texture2D" uid="uid://b6t8kyk7vpwxl" path="res://assets/sprite_enemy-idle.png" id="1_2iapm"]
+[ext_resource type="Script" path="res://scenes/enemy.gd" id="1_yapdk"]
+[ext_resource type="Texture2D" uid="uid://b6qeaprw8di3q" path="res://assets/sprite_enemy-commands.png" id="2_etnmi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_35pws"]
+atlas = ExtResource("1_2iapm")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xtyyt"]
+atlas = ExtResource("1_2iapm")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gkdqw"]
+atlas = ExtResource("1_2iapm")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aahqx"]
+atlas = ExtResource("2_etnmi")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w462x"]
+atlas = ExtResource("2_etnmi")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7mpok"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_35pws")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_35pws")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_35pws")
+}],
+"loop": false,
+"name": &"damage",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xtyyt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gkdqw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aahqx")
+}],
+"loop": true,
+"name": &"defending",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w462x")
+}],
+"loop": true,
+"name": &"healing",
+"speed": 5.0
+}]
+
+[node name="Enemy A" type="Node2D"]
+scale = Vector2(5, 5)
+script = ExtResource("1_yapdk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7mpok")
+autoplay = "default"
+frame_progress = 0.701281

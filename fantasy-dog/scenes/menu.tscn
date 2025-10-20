@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://djr46d25fmfbg"]
+[gd_scene load_steps=32 format=3 uid="uid://djr46d25fmfbg"]
 
 [ext_resource type="Theme" uid="uid://bro3mxwd07mof" path="res://assets/button.tres" id="1_10mnn"]
 [ext_resource type="Texture2D" uid="uid://c0gjgegn0f73m" path="res://assets/RPG-Menu-scroll.png" id="1_diy7m"]
@@ -15,8 +15,148 @@
 [ext_resource type="Script" path="res://scripts/SubAttack2.gd" id="7_qfr2o"]
 [ext_resource type="Script" path="res://scripts/ItemState.gd" id="8_ti2ae"]
 [ext_resource type="Script" path="res://scripts/EnemyState.gd" id="9_m2ae8"]
+[ext_resource type="Texture2D" uid="uid://dm3ihq1ev2p6m" path="res://assets/sprite-items.png" id="16_6uc6c"]
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_acxuy"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_841ck"]
+atlas = ExtResource("16_6uc6c")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lr8me"]
+atlas = ExtResource("16_6uc6c")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s8q3t"]
+atlas = ExtResource("16_6uc6c")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jryfo"]
+atlas = ExtResource("16_6uc6c")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jq8e0"]
+atlas = ExtResource("16_6uc6c")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ugjr4"]
+atlas = ExtResource("16_6uc6c")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4nv4g"]
+atlas = ExtResource("16_6uc6c")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2hkoi"]
+atlas = ExtResource("16_6uc6c")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_syhj8"]
+atlas = ExtResource("16_6uc6c")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i0ll5"]
+atlas = ExtResource("16_6uc6c")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5hvnw"]
+atlas = ExtResource("16_6uc6c")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5maos"]
+atlas = ExtResource("16_6uc6c")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2pkpl"]
+atlas = ExtResource("16_6uc6c")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7o2dj"]
+atlas = ExtResource("16_6uc6c")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lg6bi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_841ck")
+}],
+"loop": true,
+"name": &"bomb",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lr8me")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s8q3t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jryfo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jq8e0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ugjr4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4nv4g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2hkoi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_syhj8")
+}],
+"loop": true,
+"name": &"gun",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i0ll5")
+}],
+"loop": true,
+"name": &"heal",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5hvnw")
+}],
+"loop": true,
+"name": &"health",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5maos")
+}],
+"loop": false,
+"name": &"mana",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2pkpl")
+}],
+"loop": true,
+"name": &"poison",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7o2dj")
+}],
+"loop": true,
+"name": &"skip",
+"speed": 5.0
+}]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -313,7 +453,8 @@ text = "Mytstery Bag of Surprise or Sabotage"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="Options/SubActions/ItemDisplay"]
-position = Vector2(96, 112)
-scale = Vector2(152.25, 123.75)
-texture = SubResource("CanvasTexture_acxuy")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="Options/SubActions/ItemDisplay"]
+position = Vector2(99, 118)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_lg6bi")
+autoplay = "default"

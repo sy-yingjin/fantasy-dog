@@ -42,6 +42,7 @@ func attack(type: int) -> void:
 		
 func use_item() -> void:
 	# do item logic here
+	
 	pass
 	
 func takeDamage(damage: float):

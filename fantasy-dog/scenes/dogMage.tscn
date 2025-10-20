@@ -1,8 +1,74 @@
-[gd_scene load_steps=7 format=3 uid="uid://csoh6fryr1yhx"]
+[gd_scene load_steps=18 format=3 uid="uid://csoh6fryr1yhx"]
 
 [ext_resource type="Script" path="res://scripts/dog_mage.gd" id="1_578kg"]
 [ext_resource type="Texture2D" uid="uid://bya0wqr6miiin" path="res://assets/sprite_character-idles.png" id="1_utg1a"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="2_6pkln"]
+[ext_resource type="Texture2D" uid="uid://cl7mcu24pg2u3" path="res://assets/sprite_attack-effect.png" id="2_guot0"]
+[ext_resource type="Texture2D" uid="uid://bgnt406j3sf8k" path="res://assets/sprite_character-basic-attack.png" id="2_p8dqj"]
+[ext_resource type="Texture2D" uid="uid://3fmr1kwy5f0q" path="res://assets/sprite_character-defend.png" id="4_mm5re"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yeigq"]
+atlas = ExtResource("2_guot0")
+region = Rect2(0, 80, 128, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8axh2"]
+atlas = ExtResource("2_guot0")
+region = Rect2(0, 112, 128, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xp02w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 5.0,
+"texture": SubResource("AtlasTexture_yeigq")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"normal",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 5.0,
+"texture": SubResource("AtlasTexture_8axh2")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"strong",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lij0j"]
+atlas = ExtResource("2_p8dqj")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7kec6"]
+atlas = ExtResource("2_p8dqj")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_auslr"]
+atlas = ExtResource("2_p8dqj")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_axsn5"]
+atlas = ExtResource("1_utg1a")
+region = Rect2(0, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xhv88"]
 atlas = ExtResource("1_utg1a")
@@ -12,8 +78,46 @@ region = Rect2(0, 32, 32, 32)
 atlas = ExtResource("1_utg1a")
 region = Rect2(32, 32, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_8qr05"]
+atlas = ExtResource("4_mm5re")
+region = Rect2(0, 32, 32, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_iidlh"]
 animations = [{
+"frames": [{
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_lij0j")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_7kec6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_auslr")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_axsn5")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_axsn5")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_axsn5")
+}],
+"loop": false,
+"name": &"damage",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xhv88")
@@ -24,11 +128,27 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8qr05")
+}],
+"loop": true,
+"name": &"defend",
+"speed": 5.0
 }]
 
 [node name="Mage" type="Node2D" groups=["Players"]]
 scale = Vector2(5, 5)
 script = ExtResource("1_578kg")
+
+[node name="atk_effect" type="AnimatedSprite2D" parent="."]
+position = Vector2(113.8, -11.8)
+sprite_frames = SubResource("SpriteFrames_xp02w")
+animation = &"strong"
+autoplay = "default"
+frame = 2
+frame_progress = 1.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_iidlh")
