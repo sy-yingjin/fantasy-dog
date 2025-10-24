@@ -152,7 +152,13 @@ frame_progress = 1.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_iidlh")
+animation = &"defend"
 autoplay = "default"
 
 [node name="Player" type="Node" parent="."]
 script = ExtResource("2_6pkln")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

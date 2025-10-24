@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://djr46d25fmfbg"]
+[gd_scene load_steps=38 format=3 uid="uid://djr46d25fmfbg"]
 
 [ext_resource type="Theme" uid="uid://bro3mxwd07mof" path="res://assets/button.tres" id="1_10mnn"]
 [ext_resource type="Texture2D" uid="uid://c0gjgegn0f73m" path="res://assets/RPG-Menu-scroll.png" id="1_diy7m"]
@@ -14,8 +14,14 @@
 [ext_resource type="Script" path="res://scripts/SubAttack1.gd" id="6_ukufy"]
 [ext_resource type="Script" path="res://scripts/SubAttack2.gd" id="7_qfr2o"]
 [ext_resource type="Script" path="res://scripts/ItemState.gd" id="8_ti2ae"]
+[ext_resource type="Script" path="res://scripts/EnemySelectState.gd" id="9_2whdr"]
 [ext_resource type="Script" path="res://scripts/EnemyState.gd" id="9_m2ae8"]
 [ext_resource type="Texture2D" uid="uid://dm3ihq1ev2p6m" path="res://assets/sprite-items.png" id="16_6uc6c"]
+[ext_resource type="Texture2D" uid="uid://bfi1jffe725xt" path="res://assets/RPG-arrow.png" id="17_8mah4"]
+[ext_resource type="Script" path="res://scripts/enemy_arrow.gd" id="18_w61yl"]
+[ext_resource type="PackedScene" uid="uid://brhs7y7ot1vr0" path="res://scenes/enemy.tscn" id="20_nccls"]
+[ext_resource type="PackedScene" uid="uid://bt8nep16atw57" path="res://scenes/catBoss.tscn" id="21_osjhd"]
+[ext_resource type="PackedScene" uid="uid://c2qyadbji4u11" path="res://scenes/menu_cursor.tscn" id="22_m8kgj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_841ck"]
 atlas = ExtResource("16_6uc6c")
@@ -163,6 +169,60 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 1120.0
 offset_bottom = 210.0
+script = ExtResource("1_yhce5")
+
+[node name="OptionsStateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("4_do7hj")
+starting_state = NodePath("AttackState")
+
+[node name="AttackState" type="Node" parent="OptionsStateMachine" node_paths=PackedStringArray("defend_state", "sub_attack1_state", "sub_attack2_state", "item_state")]
+script = ExtResource("5_5h4iy")
+defend_state = NodePath("../DefendState")
+sub_attack1_state = NodePath("../SubAttack1State")
+sub_attack2_state = NodePath("../SubAttack2State")
+item_state = NodePath("../ItemState")
+
+[node name="DefendState" type="Node" parent="OptionsStateMachine" node_paths=PackedStringArray("attack_state", "item_state", "enemy_state")]
+script = ExtResource("5_3vgal")
+attack_state = NodePath("../AttackState")
+item_state = NodePath("../ItemState")
+enemy_state = NodePath("../EnemyState")
+
+[node name="EnemyState" type="Node" parent="OptionsStateMachine" node_paths=PackedStringArray("attack_state")]
+script = ExtResource("9_m2ae8")
+attack_state = NodePath("../AttackState")
+
+[node name="ItemState" type="Node" parent="OptionsStateMachine" node_paths=PackedStringArray("attack_state", "defend_state", "enemy_state")]
+script = ExtResource("8_ti2ae")
+attack_state = NodePath("../AttackState")
+defend_state = NodePath("../DefendState")
+enemy_state = NodePath("../EnemyState")
+
+[node name="SubAttack1State" type="Node" parent="OptionsStateMachine" node_paths=PackedStringArray("attack_state", "defend_state", "item_state", "enemy_select_state", "sub_attack2_state")]
+script = ExtResource("6_ukufy")
+attack_state = NodePath("../AttackState")
+defend_state = NodePath("../DefendState")
+item_state = NodePath("../ItemState")
+enemy_select_state = NodePath("../EnemySelectState")
+sub_attack2_state = NodePath("../SubAttack2State")
+
+[node name="SubAttack2State" type="Node" parent="OptionsStateMachine" node_paths=PackedStringArray("attack_state", "defend_state", "item_state", "enemy_state", "sub_attack1_state", "enemy_select_state")]
+script = ExtResource("7_qfr2o")
+attack_state = NodePath("../AttackState")
+defend_state = NodePath("../DefendState")
+item_state = NodePath("../ItemState")
+enemy_state = NodePath("../EnemyState")
+sub_attack1_state = NodePath("../SubAttack1State")
+enemy_select_state = NodePath(".")
+
+[node name="EnemySelectState" type="Node" parent="OptionsStateMachine" node_paths=PackedStringArray("attack_state", "defend_state", "item_state", "enemy_state", "sub_attack1_state", "sub_attack2_state")]
+script = ExtResource("9_2whdr")
+attack_state = NodePath("../AttackState")
+defend_state = NodePath("../DefendState")
+item_state = NodePath("../ItemState")
+enemy_state = NodePath("../EnemyState")
+sub_attack1_state = NodePath("../SubAttack1State")
+sub_attack2_state = NodePath("../SubAttack2State")
 
 [node name="scrollBG" type="Sprite2D" parent="."]
 position = Vector2(752.814, 128)
@@ -286,7 +346,6 @@ offset_right = 496.0
 offset_bottom = 224.0
 theme_override_constants/separation = 26
 alignment = 1
-script = ExtResource("1_yhce5")
 
 [node name="Actions" type="Control" parent="Options"]
 custom_minimum_size = Vector2(210, 150)
@@ -332,49 +391,6 @@ layout_mode = 2
 theme = ExtResource("1_10mnn")
 theme_override_colors/font_color = Color(0.345098, 0.211765, 0.121569, 1)
 text = "???Bag"
-
-[node name="OptionsStateMachine" type="Node" parent="Options" node_paths=PackedStringArray("starting_state")]
-script = ExtResource("4_do7hj")
-starting_state = NodePath("AttackState")
-
-[node name="AttackState" type="Node" parent="Options/OptionsStateMachine" node_paths=PackedStringArray("defend_state", "sub_attack1_state", "sub_attack2_state", "item_state")]
-script = ExtResource("5_5h4iy")
-defend_state = NodePath("../DefendState")
-sub_attack1_state = NodePath("../SubAttack1State")
-sub_attack2_state = NodePath("../SubAttack2State")
-item_state = NodePath("../ItemState")
-
-[node name="DefendState" type="Node" parent="Options/OptionsStateMachine" node_paths=PackedStringArray("attack_state", "item_state", "enemy_state")]
-script = ExtResource("5_3vgal")
-attack_state = NodePath("../AttackState")
-item_state = NodePath("../ItemState")
-enemy_state = NodePath("../EnemyState")
-
-[node name="EnemyState" type="Node" parent="Options/OptionsStateMachine" node_paths=PackedStringArray("attack_state")]
-script = ExtResource("9_m2ae8")
-attack_state = NodePath("../AttackState")
-
-[node name="ItemState" type="Node" parent="Options/OptionsStateMachine" node_paths=PackedStringArray("attack_state", "defend_state", "enemy_state")]
-script = ExtResource("8_ti2ae")
-attack_state = NodePath("../AttackState")
-defend_state = NodePath("../DefendState")
-enemy_state = NodePath("../EnemyState")
-
-[node name="SubAttack1State" type="Node" parent="Options/OptionsStateMachine" node_paths=PackedStringArray("attack_state", "defend_state", "item_state", "enemy_state", "sub_attack2_state")]
-script = ExtResource("6_ukufy")
-attack_state = NodePath("../AttackState")
-defend_state = NodePath("../DefendState")
-item_state = NodePath("../ItemState")
-enemy_state = NodePath("../EnemyState")
-sub_attack2_state = NodePath("../SubAttack2State")
-
-[node name="SubAttack2State" type="Node" parent="Options/OptionsStateMachine" node_paths=PackedStringArray("attack_state", "defend_state", "item_state", "enemy_state", "sub_attack1_state")]
-script = ExtResource("7_qfr2o")
-attack_state = NodePath("../AttackState")
-defend_state = NodePath("../DefendState")
-item_state = NodePath("../ItemState")
-enemy_state = NodePath("../EnemyState")
-sub_attack1_state = NodePath("../SubAttack1State")
 
 [node name="SubActions" type="Control" parent="Options"]
 custom_minimum_size = Vector2(210, 150)
@@ -458,3 +474,61 @@ position = Vector2(99, 118)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_lg6bi")
 autoplay = "default"
+
+[node name="Enemy Arrow" type="TextureRect" parent="."]
+self_modulate = Color(0.743562, 0.853475, 0, 1)
+layout_mode = 0
+offset_left = 656.0
+offset_top = -664.0
+offset_right = 672.0
+offset_bottom = -648.0
+scale = Vector2(5, 5)
+texture = ExtResource("17_8mah4")
+script = ExtResource("18_w61yl")
+
+[node name="MenuCursor" parent="." instance=ExtResource("22_m8kgj")]
+layout_mode = 1
+offset_left = 32.0
+offset_top = 72.0
+offset_right = -1072.0
+offset_bottom = -122.0
+scale = Vector2(3, 3)
+
+[node name="Enemies" type="Control" parent="."]
+custom_minimum_size = Vector2(200, 200)
+anchors_preset = 0
+offset_left = 528.0
+offset_top = -656.0
+offset_right = 1072.0
+offset_bottom = -24.0
+
+[node name="Enemy A Button" type="TextureButton" parent="Enemies"]
+layout_direction = 1
+layout_mode = 1
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 129.0
+offset_bottom = 144.0
+
+[node name="Enemy A" parent="Enemies/Enemy A Button" instance=ExtResource("20_nccls")]
+position = Vector2(72, 83)
+
+[node name="Enemy B Button" type="TextureButton" parent="Enemies"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -162.0
+offset_right = 149.0
+grow_vertical = 0
+
+[node name="Enemy B" parent="Enemies/Enemy B Button" instance=ExtResource("20_nccls")]
+position = Vector2(69, 80)
+
+[node name="Boss Button" type="TextureButton" parent="Enemies"]
+layout_mode = 0
+offset_right = 514.0
+offset_bottom = 603.0
+
+[node name="catBoss" parent="Enemies/Boss Button" instance=ExtResource("21_osjhd")]
+position = Vector2(235, 283)

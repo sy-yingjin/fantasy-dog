@@ -4,6 +4,7 @@ extends Player
 
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var attack_sprite = $atk_effect
+@onready var timer: Timer = $Timer
 
 func _ready() -> void:
 	# fill up the needed information of the dog knight
@@ -37,9 +38,27 @@ func attack(type: int) -> void:
 	animated_sprite.play("attack")
 
 func defend() -> void:
+	super()
 	animated_sprite.play("defend")
 
+func default() -> void:
+	animated_sprite.play("default")
+	attack_sprite.play("default")
+
+func finished_action() -> void:
+	timer.start()
+	print("TIMER START")
+	# wait for a few moments until the next turn
+	
+func is_done() -> bool:
+	return action_done
+
 func _process(type: float) -> void:
-	if Global.player_turn_end():
-		animated_sprite.play("default")
-		attack_sprite.play("default")
+	# if attack_sprite.is_playing():
+	if executed_action != "defend":
+		if Global.player_turn_end():
+			self.default()
+
+func _on_timer_timeout() -> void:
+	timer.stop()
+	action_done = true

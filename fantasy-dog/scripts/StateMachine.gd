@@ -3,16 +3,15 @@ extends Node
 # states and transitions of the UI menu / action selection
 
 @export var starting_state: State
+@export var enemy_select_state: State
 var current_state: State
+
 
 ## initializing the state machine by giving each child state 
 ## a reference to parent object it belongs to and enter 
 ## default starting_state
 ## parent is the control node that controls the UI menu
-#func _ready():
-	#print("")
 	
-
 func init(parent: Control) -> void:
 	for child in get_children():
 		child.parent = parent
@@ -44,6 +43,11 @@ func process_frame(delta: float) -> void:
 	if new_state:
 		change_state(new_state)
 
+func enemy_select() -> bool:
+	if current_state == enemy_select_state:
+		return true
+	else:
+		return false
 
 
 

@@ -11,25 +11,35 @@ extends State
 @export var sub_attack2_state: State
 @export var item_state: State
 
-@onready var sub_action_list: VBoxContainer = $"../../SubActions/SubActionList"
-@onready var item_display: VBoxContainer = $"../../SubActions/ItemDisplay"
+@onready var sub_action_list: VBoxContainer = $"../../Options/SubActions/SubActionList"
+@onready var item_display: VBoxContainer = $"../../Options/SubActions/ItemDisplay"
 
-@onready var attack: Button = $"../../Actions/ActionList/attack"
-@onready var defend: Button = $"../../Actions/ActionList/defend"
-@onready var item: Button = $"../../Actions/ActionList/item"
-@onready var action_1: Button = $"../../SubActions/SubActionList/action1"
-@onready var action_2: Button = $"../../SubActions/SubActionList/action2"
+@onready var attack: Button = $"../../Options/Actions/ActionList/attack"
+@onready var defend: Button = $"../../Options/Actions/ActionList/defend"
+@onready var item: Button = $"../../Options/Actions/ActionList/item"
+@onready var action_1: Button = $"../../Options/SubActions/SubActionList/action1"
+@onready var action_2: Button = $"../../Options/SubActions/SubActionList/action2"
+
+@onready var buttons = [attack, defend, item, action_1, action_2]
+
+@onready var enemy_arrow: TextureRect = $"../../Enemy Arrow"
 
 var character = null
 
 func enter() -> void:
 	character = Global.get_current_player()
 	# print(character.get_character_name())
-	attack.grab_focus()
+	character.default()
 	item_display.hide()
 	sub_action_list.show()
+	# set all buttons back to clickable
+	for b in buttons:
+		b.focus_mode = Control.FOCUS_ALL
+	# set default button to attack
+	attack.grab_focus()
 	print("START ATTACK")
 	print("HELLO")
+	# get attack info of the character
 	var i = 0
 	for child in sub_action_list.get_children():
 		# change the text in the sub action list accordingly

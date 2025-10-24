@@ -6,11 +6,12 @@ extends State
 @export var item_state: State
 @export var enemy_state: State
 
-@onready var sub_action_list: VBoxContainer = $"../../SubActions/SubActionList"
-@onready var item_display: VBoxContainer = $"../../SubActions/ItemDisplay"
+@onready var sub_action_list: VBoxContainer = $"../../Options/SubActions/SubActionList"
+@onready var item_display: VBoxContainer = $"../../Options/SubActions/ItemDisplay"
 
-@onready var item: Button = $"../../Actions/ActionList/item"
-@onready var attack: Button = $"../../Actions/ActionList/attack"
+@onready var item: Button = $"../../Options/Actions/ActionList/item"
+@onready var defend: Button = $"../../Options/Actions/ActionList/defend"
+@onready var attack: Button = $"../../Options/Actions/ActionList/attack"
 
 
 var character = null
@@ -30,15 +31,20 @@ func process_input(event: InputEvent):
 		return attack_state
 	elif Input.is_action_just_pressed("ui_accept"):
 		character.defend()
+		character.finished_action()
 		print("Character uses defend!")
-		# action executed, check if turn ended to start enemy action
-		if character.get_character_name() == "Hirow":
-			# if current player is knight, go to next player
-			Global.next_player()
-			print("MAGE'S TURN")
+		# action executed, wait for timer to end before proceed to next turn
+		defend.focus_mode = Control.FOCUS_NONE
+
+func process_frame(delta: float):
+	if character.is_done():
+		Global.end_turn()
+		print("TURN ENDED", Global.player_turn_end())
+		if !Global.player_turn_end():
 			return attack_state
-		if Global.player_turn_end():
+		else:
 			get_viewport().gui_release_focus()
+			Global.turn_ended = true
 			print("ENEMY'S TURN")
 			return enemy_state
-		
+	return null

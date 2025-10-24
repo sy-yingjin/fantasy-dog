@@ -5,22 +5,23 @@ extends State
 @export var attack_state: State
 @export var defend_state: State
 @export var item_state: State
-@export var enemy_state: State
+@export var enemy_select_state: State
 @export var sub_attack2_state: State
 
-@onready var item_display: VBoxContainer = $"../../SubActions/ItemDisplay"
+@onready var item_display: VBoxContainer = $"../../Options/SubActions/ItemDisplay"
 
-@onready var action_1: Button = $"../../SubActions/SubActionList/action1"
-@onready var action_2: Button = $"../../SubActions/SubActionList/action2"
-@onready var item: Button = $"../../Actions/ActionList/item"
-@onready var defend: Button = $"../../Actions/ActionList/defend"
-@onready var attack: Button = $"../../Actions/ActionList/attack"
+@onready var action_1: Button = $"../../Options/SubActions/SubActionList/action1"
+@onready var action_2: Button = $"../../Options/SubActions/SubActionList/action2"
+@onready var item: Button = $"../../Options/Actions/ActionList/item"
+@onready var defend: Button = $"../../Options/Actions/ActionList/defend"
+@onready var attack: Button = $"../../Options/Actions/ActionList/attack"
 
 var character = null
 
 func enter() -> void:
 	character = Global.get_current_player()
 	item_display.hide()
+	
 	print("SUB ATTACK STATE")
 	action_1.grab_focus()
 
@@ -37,17 +38,10 @@ func process_input(event: InputEvent):
 	elif item.has_focus():
 		return item_state
 	if Input.is_action_just_pressed("ui_accept"):
+		# enter enemy select state
 		# execute sub attack 1 and check turn
 		print("character does sub attack 1")
-		character.attack(1)
-		if character.get_character_name() == "Hirow":
-			# if current player is knight, go to next player
-			Global.next_player()
-			print("MAGE'S TURN")
-			return attack_state
-		else: 
-			# current player is the mage, meaning the player's turn must end
-			get_viewport().gui_release_focus()
-			print("ENEMY TURN")
-			return enemy_state
+		Global.queue_action(1)
+		return enemy_select_state
+		
 	return null

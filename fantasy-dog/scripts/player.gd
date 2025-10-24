@@ -16,6 +16,10 @@ var def
 var atk_list = [atk_1, atk_2]
 var atk_descriptions = [atk_1_desc, atk_2_desc]
 var isHurt
+var animation
+var executed_action
+var animation_ended: bool = false
+var action_done: bool = false
 
 func get_character_name() -> StringName:
 	return player_name
@@ -28,6 +32,7 @@ func get_ActDesc(j: int) -> String:
 
 func defend() -> void:
 	# do defense logic
+	executed_action = "defend"
 	pass
 	
 func attack(type: int) -> void:
@@ -51,5 +56,12 @@ func takeDamage(damage: float):
 	isHurt = true # use this to do the blinking animation to indicate damage
 	
 	updateBar.emit()
+	
+func play_and_wait_for_animation(animation_name):
+	animation.play(animation_name)
+	
+func finished_action() -> void:
+	# start a wait timer here
+	pass
 	
 	

@@ -1,12 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://cxiq85h1q50yu"]
+[gd_scene load_steps=7 format=3 uid="uid://cxiq85h1q50yu"]
 
 [ext_resource type="PackedScene" uid="uid://imjs4c2tpwnk" path="res://scenes/dogKnight.tscn" id="1_uqnng"]
 [ext_resource type="Texture2D" uid="uid://b2t2nbpvgb1f6" path="res://assets/BG.png" id="1_y58lw"]
 [ext_resource type="PackedScene" uid="uid://csoh6fryr1yhx" path="res://scenes/dogMage.tscn" id="2_e5ao0"]
-[ext_resource type="PackedScene" uid="uid://bt8nep16atw57" path="res://scenes/catBoss.tscn" id="2_xpiov"]
-[ext_resource type="PackedScene" uid="uid://brhs7y7ot1vr0" path="res://scenes/enemy.tscn" id="3_0wu8n"]
 [ext_resource type="PackedScene" uid="uid://djr46d25fmfbg" path="res://scenes/menu.tscn" id="3_u0u4c"]
-[ext_resource type="PackedScene" uid="uid://c2qyadbji4u11" path="res://scenes/menu_cursor.tscn" id="6_nk6e2"]
 [ext_resource type="Texture2D" uid="uid://bfi1jffe725xt" path="res://assets/RPG-arrow.png" id="7_3fkkd"]
 [ext_resource type="Script" path="res://scripts/character_arrow.gd" id="8_ir0j4"]
 
@@ -21,15 +18,6 @@ grow_vertical = 2
 [node name="BG" type="Sprite2D" parent="."]
 position = Vector2(811, 541)
 texture = ExtResource("1_y58lw")
-
-[node name="catBoss" parent="." instance=ExtResource("2_xpiov")]
-position = Vector2(1124, 449)
-
-[node name="Enemy A" parent="." instance=ExtResource("3_0wu8n")]
-position = Vector2(727, 322)
-
-[node name="Enemy B" parent="." instance=ExtResource("3_0wu8n")]
-position = Vector2(1501, 322)
 
 [node name="Mage" parent="." instance=ExtResource("2_e5ao0")]
 position = Vector2(216, 512)
@@ -55,6 +43,24 @@ player = NodePath("../../../../../Mage")
 [node name="Mana" parent="Options/All Characters/StatusList/MageStatus" index="1" node_paths=PackedStringArray("player")]
 player = NodePath("../../../../../Mage")
 
+[node name="Enemy A Button" parent="Options/Enemies" index="0"]
+offset_left = 120.0
+offset_top = 72.0
+offset_right = 265.0
+offset_bottom = 232.0
+
+[node name="Enemy B Button" parent="Options/Enemies" index="1"]
+offset_left = 192.0
+offset_top = -184.0
+offset_right = 341.0
+offset_bottom = -22.0
+
+[node name="Boss Button" parent="Options/Enemies" index="2"]
+offset_left = 449.0
+offset_top = 3.0
+offset_right = 963.0
+offset_bottom = 606.0
+
 [node name="Action Declare" type="Label" parent="."]
 layout_mode = 0
 offset_left = 53.0
@@ -63,13 +69,6 @@ offset_right = 1013.0
 offset_bottom = 789.0
 theme_override_font_sizes/font_size = 60
 text = "WHAT IS HAPPNEING ?"
-
-[node name="MenuCursor" parent="." instance=ExtResource("6_nk6e2")]
-layout_mode = 1
-offset_left = 88.0
-offset_top = 867.0
-offset_right = -1484.0
-offset_bottom = -165.0
 
 [node name="Character Arrow" type="TextureRect" parent="."]
 layout_mode = 0
@@ -86,12 +85,15 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -257.0
-offset_top = -120.0
+offset_left = -320.0
+offset_top = -110.0
+offset_right = -15.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 40
-text = "x for enter
-c for cancel"
+text = "x or enter to 
+confrim selection
+"
+horizontal_alignment = 2
 
 [editable path="Options"]

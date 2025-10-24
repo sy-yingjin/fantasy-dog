@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://brhs7y7ot1vr0"]
 
 [ext_resource type="Texture2D" uid="uid://b6t8kyk7vpwxl" path="res://assets/sprite_enemy-idle.png" id="1_2iapm"]
-[ext_resource type="Script" path="res://scenes/enemy.gd" id="1_yapdk"]
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_yapdk"]
 [ext_resource type="Texture2D" uid="uid://b6qeaprw8di3q" path="res://assets/sprite_enemy-commands.png" id="2_etnmi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_35pws"]
