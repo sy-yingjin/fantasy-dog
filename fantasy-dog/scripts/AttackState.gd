@@ -34,11 +34,14 @@ func enter() -> void:
 	item_display.hide()
 	menu_cursor.show()
 	sub_action_list.show()
+	
 	# set all buttons back to clickable
 	for b in buttons:
 		b.focus_mode = Control.FOCUS_ALL
 	# set default button to attack
 	attack.grab_focus()
+	
+	
 	print("START ATTACK")
 	print("HELLO")
 	# get attack info of the character
