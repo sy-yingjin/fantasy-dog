@@ -147,13 +147,13 @@ position = Vector2(113.8, -11.8)
 sprite_frames = SubResource("SpriteFrames_xp02w")
 animation = &"strong"
 autoplay = "default"
-frame = 2
-frame_progress = 1.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_iidlh")
-animation = &"defend"
+animation = &"attack"
 autoplay = "default"
+frame = 2
+frame_progress = 1.0
 
 [node name="Player" type="Node" parent="."]
 script = ExtResource("2_6pkln")

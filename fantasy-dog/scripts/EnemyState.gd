@@ -5,11 +5,19 @@ extends State
 
 @onready var actions: Control = $"../../Options/Actions"
 @onready var sub_actions: Control = $"../../Options/SubActions"
+@onready var enemy_arrow: TextureRect = $"../../Enemy Arrow"
+@onready var menu_cursor: TextureRect = $"../../MenuCursor"
+
+
 
 func enter() -> void:
 	# hide options
 	actions.hide()
 	sub_actions.hide()
+	enemy_arrow.hide()
+	menu_cursor.hide()
+	
+	
 
 	#
 ## do whatever enemy stuffs are needed

@@ -37,14 +37,5 @@ func process_input(event: InputEvent):
 	if Input.is_action_just_pressed("ui_accept"):
 		# execute sub attack 2 and check turn
 		# return enemy_select_state
-		character.attack(2)
-		Global.end_turn()
-		
-		if !Global.player_turn_end():
-			return attack_state
-		else: 
-			get_viewport().gui_release_focus()
-			print(Global.get_current_player())
-			print("ENEMY'S TURN")
-			# current player is the mage, meaning the player's turn must end
-			return enemy_state
+		Global.queue_action(2)
+		return enemy_select_state

@@ -33,22 +33,34 @@ var current_enemies = null
 
 func _ready() -> void:
 	current_enemies = [enemy_a_button, enemy_b_button, boss_button]
-	print(other_buttons)
+	# print(other_buttons)
 
 func enter() -> void:
 	character = Global.get_current_player()
+	Global.enemy_select = true
+	# diable menu cursor and hide it
+	menu_cursor.process_mode = menu_cursor.PROCESS_MODE_DISABLED
 	menu_cursor.hide()
-	enemy_arrow.show()
+	
 	# disable other buttons 
 	for b in other_buttons:
 		b.focus_mode = Control.FOCUS_NONE
+	
 	# enable the focus on enemy buttons
 	for b in current_enemies:
 		b.focus_mode = Control.FOCUS_ALL
+		print("focus on ", b)
 	current_enemies[0].grab_focus()
 	print("SELECT ENEMIES")
+	
+	enemy_arrow.process_mode = enemy_arrow.PROCESS_MODE_ALWAYS
 
 func process_input(event: InputEvent):
+	if Input.is_action_just_pressed("ui_down") ||  Input.is_action_just_pressed("ui_up") ||  Input.is_action_just_pressed("ui_right"):
+		#current_enemies[1].grab_focus()
+		print("UI MOVE")
+		print(get_viewport().gui_get_focus_owner())
+		
 	if Input.is_action_just_pressed("ui_cancel"):
 		# change buttons focusables
 		for b in other_buttons:
@@ -57,16 +69,32 @@ func process_input(event: InputEvent):
 			b.focus_mode = Control.FOCUS_NONE
 		# return to subattack state
 		action_1.grab_focus()
+		
+		# allows menu cursor to function again and deselect enemy
+		menu_cursor.process_mode = menu_cursor.PROCESS_MODE_ALWAYS
+		Global.enemy_select = false
 		return sub_attack1_state
 	elif Input.is_action_just_pressed("ui_accept"):
-		# character does sub attack 1
-		character.attack(1)
+		# character does the queued action on selected enemy
+		character.attack(Global.get_queued_action())
+		character.finished_action()
+		
+		# allows menu cursor to function again and deselect enemy
+		Global.enemy_select = false
+
+			
+func process_frame(delta: float):
+	if character.is_done():
 		Global.end_turn()
+		print("TURN ENDED", Global.player_turn_end())
+		menu_cursor.process_mode = menu_cursor.PROCESS_MODE_ALWAYS
 		if !Global.player_turn_end():
 			return attack_state
-		else: 
-			# current player is the mage, meaning the player's turn must end
+		else:
 			get_viewport().gui_release_focus()
-			print("ENEMY TURN")
+			Global.turn_ended = true
+			print("ENEMY'S TURN")
 			return enemy_state
+	return null
+	
 	

@@ -80,5 +80,6 @@ script = ExtResource("1_yapdk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7mpok")
+animation = &"healing"
 autoplay = "default"
-frame_progress = 0.701281
+frame_progress = 0.461913

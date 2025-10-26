@@ -24,8 +24,8 @@ func _ready() -> void:
 
 	# add other features
 	# add other features
-func attack(type: int) -> void:
-	if type == 1:
+func attack(type: String) -> void:
+	if type == "sub_atk_1":
 		## do type 1 attack
 		print("DOING BASIC ATTACK - love, Mage")
 		attack_sprite.play("normal")
@@ -44,8 +44,10 @@ func defend() -> void:
 func default() -> void:
 	animated_sprite.play("default")
 	attack_sprite.play("default")
+	action_done = false
 
 func finished_action() -> void:
+	super()
 	timer.start()
 	print("TIMER START")
 	# wait for a few moments until the next turn

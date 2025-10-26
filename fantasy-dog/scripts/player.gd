@@ -35,8 +35,8 @@ func defend() -> void:
 	executed_action = "defend"
 	pass
 	
-func attack(type: int) -> void:
-	if type == 1:
+func attack(type: String) -> void:
+	if type == "sub_atk_1":
 		# do type 1 attack
 		print("player did ordinary attack")
 	else:
@@ -61,6 +61,7 @@ func play_and_wait_for_animation(animation_name):
 	animation.play(animation_name)
 	
 func finished_action() -> void:
+	Global.queued_action = null
 	# start a wait timer here
 	pass
 	

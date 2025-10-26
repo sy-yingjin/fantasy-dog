@@ -11,6 +11,10 @@ var target_enemy = null
 var turn_ended = false
 var existing_enemies = []
 var player_attack = null
+var enemy_select = false
+var queued_action
+
+# I made this global script to share variables among states and characters easier
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -65,9 +69,11 @@ func get_current_actor() -> Node:
 func enemy_list() -> Array:
 	return existing_enemies
 	
-func queue_action(type: int) -> String:
-	if type == 1:
+func queue_action(type: int) -> void:
+	queued_action = type
+
+func get_queued_action() -> String:
+	if queued_action == 1:
 		return "sub_atk_1"
 	else: 
 		return "sub_atk_2"
-	

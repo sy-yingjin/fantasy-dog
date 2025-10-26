@@ -213,7 +213,7 @@ defend_state = NodePath("../DefendState")
 item_state = NodePath("../ItemState")
 enemy_state = NodePath("../EnemyState")
 sub_attack1_state = NodePath("../SubAttack1State")
-enemy_select_state = NodePath(".")
+enemy_select_state = NodePath("../EnemySelectState")
 
 [node name="EnemySelectState" type="Node" parent="OptionsStateMachine" node_paths=PackedStringArray("attack_state", "defend_state", "item_state", "enemy_state", "sub_attack1_state", "sub_attack2_state")]
 script = ExtResource("9_2whdr")
@@ -475,17 +475,6 @@ scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_lg6bi")
 autoplay = "default"
 
-[node name="Enemy Arrow" type="TextureRect" parent="."]
-self_modulate = Color(0.743562, 0.853475, 0, 1)
-layout_mode = 0
-offset_left = 656.0
-offset_top = -664.0
-offset_right = 672.0
-offset_bottom = -648.0
-scale = Vector2(5, 5)
-texture = ExtResource("17_8mah4")
-script = ExtResource("18_w61yl")
-
 [node name="MenuCursor" parent="." instance=ExtResource("22_m8kgj")]
 layout_mode = 1
 offset_left = 32.0
@@ -532,3 +521,13 @@ offset_bottom = 603.0
 
 [node name="catBoss" parent="Enemies/Boss Button" instance=ExtResource("21_osjhd")]
 position = Vector2(235, 283)
+
+[node name="Enemy Arrow" type="TextureRect" parent="."]
+self_modulate = Color(0.743562, 0.853475, 0, 1)
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+rotation = -1.5708
+scale = Vector2(5, 5)
+texture = ExtResource("17_8mah4")
+script = ExtResource("18_w61yl")

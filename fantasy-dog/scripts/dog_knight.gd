@@ -27,28 +27,26 @@ func _ready() -> void:
 	#
 
 	# add other features
-func attack(type: int) -> void:
-	if type == 1:
+func attack(type: String) -> void:
+	if type == "sub_atk_1":
 		## do type 1 attack
 		print("DOING BASIC ATTACK - love, Knight")
-		#play_attack()
+		play_attack(1)
 		executed_action = "Braver"
 		#pass
 	else:
 		## do type 2 attack
 		# updateBar.emit() to update MP bar in UI
 		print("DOING STRONG ATTACK - love, Knight")
-		attack_sprite.play("strong")
 		executed_action = "Aura Sword"
+		play_attack(2)
 	
 	animated_sprite.play("attack")
 
-func play_attack(type: int, target: Node2D) -> void:
+func play_attack(type: int) -> void:
 	if type == 1:
-		attack_sprite.set_global_position = target.global_position + OFFSET
 		attack_sprite.play("normal")
 	else:
-		attack_sprite.set_global_position = target.global_position + OFFSET
 		attack_sprite.play("strong")
 		
 
@@ -59,15 +57,17 @@ func defend() -> void:
 func default() -> void:
 	animated_sprite.play("default")
 	attack_sprite.play("default")
+	action_done = false
 
 func finished_action() -> void:
+	super()
 	timer.start()
 	print("TIMER START")
 	# wait for a few moments until the next turn
 	
 func is_done() -> bool:
 	return action_done
-
+	
 func _process(type: float) -> void:
 	# if attack_sprite.is_playing():
 	if executed_action != "defend":

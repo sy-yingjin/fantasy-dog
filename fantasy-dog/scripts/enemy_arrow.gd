@@ -1,6 +1,6 @@
-extends Control
+extends TextureRect
 
-const OFFSET: Vector2 = Vector2(-10,-3)
+const OFFSET: Vector2 = Vector2(-100,150)
 
 var target: Node = null
 
@@ -10,7 +10,9 @@ func _ready() -> void:
 	set_process(false)
 	
 func _process(_delta: float) -> void:
-	if true:
+	if Global.enemy_select:
+		self.show()
+	else: 
 		self.hide()
 	global_position = target.global_position + OFFSET
 	

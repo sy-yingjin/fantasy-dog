@@ -23,6 +23,7 @@ extends State
 @onready var buttons = [attack, defend, item, action_1, action_2]
 
 @onready var enemy_arrow: TextureRect = $"../../Enemy Arrow"
+@onready var menu_cursor: TextureRect = $"../../MenuCursor"
 
 var character = null
 
@@ -31,6 +32,7 @@ func enter() -> void:
 	# print(character.get_character_name())
 	character.default()
 	item_display.hide()
+	menu_cursor.show()
 	sub_action_list.show()
 	# set all buttons back to clickable
 	for b in buttons:
