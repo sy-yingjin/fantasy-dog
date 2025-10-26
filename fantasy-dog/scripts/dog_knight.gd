@@ -31,24 +31,19 @@ func attack(type: String) -> void:
 	if type == "sub_atk_1":
 		## do type 1 attack
 		print("DOING BASIC ATTACK - love, Knight")
-		play_attack(1)
 		executed_action = "Braver"
+		attack_sprite.play("normal")
 		#pass
 	else:
 		## do type 2 attack
 		# updateBar.emit() to update MP bar in UI
 		print("DOING STRONG ATTACK - love, Knight")
 		executed_action = "Aura Sword"
-		play_attack(2)
+		attack_sprite.play("strong")
+		used_MP(10)
 	
 	animated_sprite.play("attack")
-
-func play_attack(type: int) -> void:
-	if type == 1:
-		attack_sprite.play("normal")
-	else:
-		attack_sprite.play("strong")
-		
+				
 
 func defend() -> void:
 	super()
@@ -77,3 +72,12 @@ func _process(type: float) -> void:
 func _on_timer_timeout() -> void:
 	timer.stop()
 	action_done = true
+	
+func take_damage(damage: float) -> void:
+	# do the damage logic from parent
+	super(damage)
+	animated_sprite.play("damage")
+	
+func used_MP(amount: float):
+	super(amount)
+	

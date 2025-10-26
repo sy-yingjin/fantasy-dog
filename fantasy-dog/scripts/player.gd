@@ -47,14 +47,17 @@ func attack(type: String) -> void:
 		
 func use_item() -> void:
 	# do item logic here
-	
+	# red bottle: heal HP
+	# blue bottle: heal MP 
+	# green bottle: poison HP
+	# ham: heal both HP MP
+	# bone: skip turn (got distracted)
+	# flower: take down enemy defense ????
+	# gun: damage enemy
 	pass
 	
-func takeDamage(damage: float):
+func take_damage(damage: float):
 	currentHP -= damage
-	
-	isHurt = true # use this to do the blinking animation to indicate damage
-	
 	updateBar.emit()
 	
 func play_and_wait_for_animation(animation_name):
@@ -64,5 +67,9 @@ func finished_action() -> void:
 	Global.queued_action = null
 	# start a wait timer here
 	pass
+	
+func used_MP(amount: float):
+	currentMP -= amount
+	updateBar.emit()
 	
 	

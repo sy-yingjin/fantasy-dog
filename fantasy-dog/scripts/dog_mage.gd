@@ -29,11 +29,13 @@ func attack(type: String) -> void:
 		## do type 1 attack
 		print("DOING BASIC ATTACK - love, Mage")
 		attack_sprite.play("normal")
+		used_MP(4)
 	else:
 		## do type 2 attack
 		# updateBar.emit() to update MP bar in UI
 		print("DOING STRONG ATTACK - love, Mage")
 		attack_sprite.play("strong")
+		used_MP(15)
 		
 	animated_sprite.play("attack")
 
@@ -64,3 +66,6 @@ func _process(type: float) -> void:
 func _on_timer_timeout() -> void:
 	timer.stop()
 	action_done = true
+	
+func used_MP(amount: float):
+	super(amount)
