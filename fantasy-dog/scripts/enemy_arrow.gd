@@ -10,11 +10,11 @@ func _ready() -> void:
 	set_process(false)
 	
 func _process(_delta: float) -> void:
-	if Global.enemy_select:
+	if Global.enemy_select and target != null and is_instance_valid(target):
 		self.show()
-	else: 
+		global_position = target.global_position + OFFSET
+	else:
 		self.hide()
-	global_position = target.global_position + OFFSET
 	
 func _on_viewport_gui_focus_changed(node: Control) -> void:
 	if node is BaseButton:

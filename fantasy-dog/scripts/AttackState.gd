@@ -29,19 +29,33 @@ var character = null
 
 func enter() -> void:
 	character = Global.get_current_player()
+
+	# Safety check for character
+	if not character:
+		push_error("Character is null in AttackState.enter()")
+		return
+
 	# print(character.get_character_name())
 	character.default()
 	item_display.hide()
+
+	# Ensure menu cursor is visible and processing
 	menu_cursor.show()
+	menu_cursor.process_mode = menu_cursor.PROCESS_MODE_ALWAYS
+
 	sub_action_list.show()
-	
+
+	# Announce player's turn (only at start of turn, not when cycling menu)
+	if not Global.turn_ended and character:
+		Global.declare("%s's Turn" % character.get_character_name())
+
 	# set all buttons back to clickable
 	for b in buttons:
 		b.focus_mode = Control.FOCUS_ALL
 	# set default button to attack
 	attack.grab_focus()
-	
-	
+
+
 	print("START ATTACK")
 	print("HELLO")
 	# get attack info of the character
@@ -53,7 +67,7 @@ func enter() -> void:
 			# attack button
 			child.text = character.get_Act(i)
 			i += 1
-		else: 
+		else:
 			# description of attack
 			child.text = character.get_ActDesc(i-1)
 			# print(child)	

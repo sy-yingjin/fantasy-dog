@@ -16,9 +16,9 @@ func _ready() -> void:
 	
 func update():
 	if type == "HP":
-		value = (player.currentHP / player.maxHP) * player.maxHP
+		value = clamp(player.currentHP, 0.0, player.maxHP)
+		print("%s HP: %d" % [player.get_character_name(), int(value)])
 	elif type == "MP":
-		value = (player.currentMP / player.maxMP) * player.maxMP
-		
-	print(player.get_character_name(), " HAS ", value, " ", type)
+		value = clamp(player.currentMP, 0.0, player.maxMP)
+		print("%s MP: %d" % [player.get_character_name(), int(value)])
 		

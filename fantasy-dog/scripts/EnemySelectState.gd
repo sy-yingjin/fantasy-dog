@@ -21,7 +21,7 @@ extends State
 @onready var enemy_b_button: TextureButton = $"../../Enemies/Enemy B Button"
 @onready var boss_button: TextureButton = $"../../Enemies/Boss Button"
 
-@onready var enemies: Control = $"../Options/Enemies"
+@onready var enemies: Control = $"../../Enemies"
 
 @onready var menu_cursor: TextureRect = $"../../MenuCursor"
 @onready var enemy_arrow: TextureRect = $"../../Enemy Arrow"
@@ -47,10 +47,20 @@ func enter() -> void:
 		b.focus_mode = Control.FOCUS_NONE
 	
 	# enable the focus on enemy buttons
+	var grabbed := false
 	for b in current_enemies:
-		b.focus_mode = Control.FOCUS_ALL
+		# Skip disabled/hidden buttons (defeated enemies)
+		if b.visible and not b.disabled:
+			b.focus_mode = Control.FOCUS_ALL
+			if not grabbed:
+				b.grab_focus()
+				grabbed = true
+		else:
+			b.focus_mode = Control.FOCUS_NONE
 		print("focus on ", b)
-	current_enemies[0].grab_focus()
+	if not grabbed:
+		# Fallback: release focus if nothing is selectable
+		get_viewport().gui_release_focus()
 	print("SELECT ENEMIES")
 	
 	enemy_arrow.process_mode = enemy_arrow.PROCESS_MODE_ALWAYS
@@ -75,10 +85,22 @@ func process_input(event: InputEvent):
 		Global.enemy_select = false
 		return sub_attack1_state
 	elif Input.is_action_just_pressed("ui_accept"):
-		# character does the queued action on selected enemy
-		character.attack(Global.get_queued_action())
-		character.finished_action()
-		
+		# Get focused enemy button and set target enemy
+		var focused := get_viewport().gui_get_focus_owner()
+		var idx: int = current_enemies.find(focused)
+
+		if idx >= 0:
+			var target = Global.enemy_list()[idx]
+			if target and target.is_alive():
+				# Set the target enemy from the enemy list
+				Global.target_enemy = target
+				# character does the queued action on selected enemy
+				character.attack(Global.get_queued_action())
+				character.finished_action()
+			else:
+				# Ignore input if target is invalid/dead
+				return null
+
 		# allows menu cursor to function again and deselect enemy
 		Global.enemy_select = false
 
@@ -88,6 +110,9 @@ func process_frame(delta: float):
 		Global.end_turn()
 		print("TURN ENDED", Global.player_turn_end())
 		menu_cursor.process_mode = menu_cursor.PROCESS_MODE_ALWAYS
+		# If battle already ended during the action, stop here
+		if Global.battle_over:
+			return null
 		if !Global.player_turn_end():
 			return attack_state
 		else:

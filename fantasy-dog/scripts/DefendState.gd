@@ -18,6 +18,12 @@ var character = null
 
 func enter() -> void:
 	character = Global.get_current_player()
+
+	# Safety check for character
+	if not character:
+		push_error("Character is null in DefendState.enter()")
+		return
+
 	# since defend has no sub actions, hide the contents of sub action list
 	sub_action_list.hide()
 	item_display.hide()
@@ -30,16 +36,20 @@ func process_input(event: InputEvent):
 	elif attack.has_focus():
 		return attack_state
 	elif Input.is_action_just_pressed("ui_accept"):
-		character.defend()
-		character.finished_action()
-		print("Character uses defend!")
-		# action executed, wait for timer to end before proceed to next turn
-		defend.focus_mode = Control.FOCUS_NONE
+		if character:
+			character.defend()
+			Global.declare("%s defends!" % character.get_character_name())
+			character.finished_action()
+			print("Character uses defend!")
+			# action executed, wait for timer to end before proceed to next turn
+			defend.focus_mode = Control.FOCUS_NONE
 
 func process_frame(delta: float):
-	if character.is_done():
+	if character and character.is_done():
 		Global.end_turn()
 		print("TURN ENDED", Global.player_turn_end())
+		if Global.battle_over:
+			return null
 		if !Global.player_turn_end():
 			return attack_state
 		else:

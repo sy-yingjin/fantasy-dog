@@ -11,9 +11,9 @@ var OFFSET = Vector2(0,0)
 func _ready() -> void:
 	# fill up the needed information of the dog knight
 	maxHP = 100
-	maxMP = 50
-	currentHP = 50 # bar testing
-	currentMP = 10 # bar testing
+	maxMP = 100
+	currentHP = 100 # restore full HP for normal play
+	currentMP = 100 # start full MP
 	player_name = "Hirow"
 	atk_1 = "Braver"
 	atk_1_desc = "Mighty Cut Awooo"
@@ -28,21 +28,36 @@ func _ready() -> void:
 
 	# add other features
 func attack(type: String) -> void:
+	var dmg := 0.0
+
 	if type == "sub_atk_1":
 		## do type 1 attack
 		print("DOING BASIC ATTACK - love, Knight")
 		executed_action = "Braver"
+		dmg = 20.0
 		attack_sprite.play("normal")
-		#pass
 	else:
 		## do type 2 attack
 		# updateBar.emit() to update MP bar in UI
 		print("DOING STRONG ATTACK - love, Knight")
 		executed_action = "Aura Sword"
+		dmg = 35.0
 		attack_sprite.play("strong")
-		used_MP(10)
-	
+		used_MP(10)  # Costs 10 MP
+
 	animated_sprite.play("attack")
+
+	# Apply damage to target
+	if Global.target_enemy and Global.target_enemy.is_alive():
+		Global.target_enemy.take_damage(dmg)
+		Global.declare("%s uses %s! %s takes %d HP!" % [
+			player_name,
+			executed_action,
+			Global.target_enemy.name,
+			int(dmg)
+		])
+	else:
+		Global.declare("%s uses %s!" % [player_name, executed_action])
 				
 
 func defend() -> void:
@@ -80,4 +95,13 @@ func take_damage(damage: float) -> void:
 	
 func used_MP(amount: float):
 	super(amount)
+
+
+# Hide the player when defeated, then delegate to base to declare and end-check
+func die() -> void:
+	if is_instance_valid(animated_sprite):
+		animated_sprite.hide()
+	if is_instance_valid(attack_sprite):
+		attack_sprite.hide()
+	super.die()
 	

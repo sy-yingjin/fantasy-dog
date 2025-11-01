@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cxiq85h1q50yu"]
+[gd_scene load_steps=8 format=3 uid="uid://cxiq85h1q50yu"]
 
 [ext_resource type="PackedScene" uid="uid://imjs4c2tpwnk" path="res://scenes/dogKnight.tscn" id="1_uqnng"]
 [ext_resource type="Texture2D" uid="uid://b2t2nbpvgb1f6" path="res://assets/BG.png" id="1_y58lw"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://djr46d25fmfbg" path="res://scenes/menu.tscn" id="3_u0u4c"]
 [ext_resource type="Texture2D" uid="uid://bfi1jffe725xt" path="res://assets/RPG-arrow.png" id="7_3fkkd"]
 [ext_resource type="Script" path="res://scripts/character_arrow.gd" id="8_ir0j4"]
+[ext_resource type="Script" path="res://scripts/end_panel.gd" id="9_ep"]
 
 [node name="Battle" type="Control"]
 layout_mode = 3
@@ -102,5 +103,48 @@ text = "x to enter
 c to cancel
 "
 horizontal_alignment = 2
+
+[node name="EndPanel" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("9_ep")
+
+[node name="Dim" type="ColorRect" parent="EndPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="CenterContainer" type="CenterContainer" parent="EndPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EndPanel/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="EndPanel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 80
+text = "Victory!"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="EndPanel/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+text = "Restart"
 
 [editable path="Options"]

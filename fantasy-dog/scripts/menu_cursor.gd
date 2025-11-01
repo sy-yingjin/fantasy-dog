@@ -9,6 +9,10 @@ func _ready() -> void:
 	set_process(false)
 	
 func _process(_delta: float) -> void:
+	if target == null or not is_instance_valid(target):
+		hide()
+		set_process(false)
+		return
 	global_position = target.global_position + OFFSET
 		
 	
