@@ -150,10 +150,8 @@ autoplay = "default"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_iidlh")
-animation = &"attack"
+animation = &"damage"
 autoplay = "default"
-frame = 2
-frame_progress = 1.0
 
 [node name="Player" type="Node" parent="."]
 script = ExtResource("2_6pkln")

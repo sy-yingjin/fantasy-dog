@@ -43,6 +43,7 @@ func choose_attack() -> void:
 
 
 func attack_single() -> void:
+	animate(5)
 	attack(1)  # Play single target animation
 
 	# Get alive players
@@ -61,9 +62,11 @@ func attack_single() -> void:
 	target.take_damage(dmg)
 	var actual := int(target.get_last_damage_taken()) if (target and target.has_method("get_last_damage_taken")) else int(dmg)
 	Global.declare("Boss hits %s for %d HP!" % [target.get_character_name(), actual])
+	await get_tree().create_timer(2).timeout
 
 
 func attack_all() -> void:
+	animate(5)
 	attack(2)  # Play AoE animation
 
 	var dmg := 12.0
@@ -81,6 +84,8 @@ func attack_all() -> void:
 		for i in range(1, parts.size()):
 			msg += ", " + parts[i]
 		Global.declare(msg)
+		
+	await get_tree().create_timer(2).timeout
 
 
 func animate(type: int) -> void:
@@ -88,8 +93,10 @@ func animate(type: int) -> void:
 		animated_sprite.play("defend")
 	elif type == 2:
 		animated_sprite.play("healed")
-	else:
+	elif type == 3:
 		animated_sprite.play("damage")
+	else:
+		animated_sprite.play("default")
 
 
 func attack(type: int) -> void:

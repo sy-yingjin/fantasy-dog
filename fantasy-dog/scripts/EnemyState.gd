@@ -29,7 +29,7 @@ func enter() -> void:
 	for e in Global.enemy_list():
 		if e and e != Global.boss and e.is_alive():
 			e.decide_action()
-			await get_tree().create_timer(1.2).timeout  # Wait for animation
+			await get_tree().create_timer(1.5).timeout  # Wait for animation
 
 	# Boss acts
 	if Global.boss and Global.boss.is_alive():
@@ -48,10 +48,13 @@ func enter() -> void:
 	if Global.mage and Global.mage.has_method("clear_defend"):
 		Global.mage.clear_defend()
 
+
+	await get_tree().create_timer(2).timeout
+	
 	# Return to player turn
 	Global.turn_ended = false
 	Global.declare("Players' Turn")
-	await get_tree().create_timer(0.5).timeout
+	
 
 	# Show UI elements before transitioning
 	actions.show()

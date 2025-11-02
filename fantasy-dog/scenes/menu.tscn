@@ -171,9 +171,10 @@ offset_right = 1120.0
 offset_bottom = 210.0
 script = ExtResource("1_yhce5")
 
-[node name="OptionsStateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+[node name="OptionsStateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state", "enemy_select_state")]
 script = ExtResource("4_do7hj")
 starting_state = NodePath("AttackState")
+enemy_select_state = NodePath("EnemySelectState")
 
 [node name="AttackState" type="Node" parent="OptionsStateMachine" node_paths=PackedStringArray("defend_state", "sub_attack1_state", "sub_attack2_state", "item_state")]
 script = ExtResource("5_5h4iy")

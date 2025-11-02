@@ -76,6 +76,12 @@ func enemies_enable_select() -> void:
 			print("focus on ", b)
 
 		enemy_arrow.show()
+	else:
+		for b in other_buttons:
+			b.focus_mode = Control.FOCUS_ALL
+		for b in enemies.get_children():
+			b.focus_mode = Control.FOCUS_NONE
+		
 
 func _init_state_machine() -> void:
 	if _initialized:

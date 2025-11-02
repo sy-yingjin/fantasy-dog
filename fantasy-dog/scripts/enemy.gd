@@ -29,7 +29,8 @@ func take_damage(damage: float) -> void:
 func heal(amount: float) -> void:
 	currentHP = min(maxHP, currentHP + amount)
 	print(name, " healed. HP: ", currentHP, "/", maxHP)
-	animated_sprite.play("healing")
+	animate(2)
+	Global.boss.animate(2)
 
 
 func decide_action() -> void:
@@ -47,14 +48,17 @@ func decide_action() -> void:
 
 	# Default action: Defend
 	animate(1)  # Play defending animation
-	Global.declare("%s is defending!" % name)
+	Global.boss.animate(1)
+	Global.declare("%s is defending boss!" % name)
 
 
 func animate(type: int) -> void:
 	if type == 1:
 		animated_sprite.play("defending")
-	else:
+	elif type == 2:
 		animated_sprite.play("healing")
+	else:
+		animated_sprite.play("default")
 
 
 func die() -> void:

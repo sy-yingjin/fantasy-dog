@@ -141,10 +141,8 @@ script = ExtResource("1_34nj8")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_k2udk")
-animation = &"attack"
+animation = &"damage"
 autoplay = "default"
-frame = 3
-frame_progress = 1.0
 
 [node name="atk_effect" type="AnimatedSprite2D" parent="."]
 position = Vector2(288, 0)

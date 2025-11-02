@@ -40,7 +40,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lkk1x")
 }],
-"loop": true,
+"loop": false,
 "name": &"damage",
 "speed": 5.0
 }, {
@@ -113,12 +113,12 @@ script = ExtResource("1_lm5yr")
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_fpajc")
-animation = &"defend"
+animation = &"damage"
 autoplay = "default"
 
 [node name="atk_fx" type="AnimatedSprite2D" parent="."]
 modulate = Color(1, 0.1, 0.1, 1)
-position = Vector2(-771, 0)
+position = Vector2(-966, 0)
 scale = Vector2(7.35937, 6.85454)
 sprite_frames = SubResource("SpriteFrames_7n6ak")
 autoplay = "default"

@@ -84,6 +84,13 @@ func _on_timer_timeout() -> void:
 	timer.stop()
 	action_done = true
 	
+func take_damage(damage: float) -> void:
+	# do the damage logic from parent
+	animated_sprite.play("damage")
+	super(damage)
+	
+	
+	
 func used_MP(amount: float):
 	super(amount)
 
