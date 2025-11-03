@@ -107,9 +107,8 @@ func enter() -> void:
 
 	await get_tree().create_timer(2).timeout
 
-	# Return to player turn - reset to knight
-	Global.turn_ended = false
-	#Global.current_player = Global.knight
+	# Return to player turn - reset to first actor and flags
+	Global.start_turn()
 	Global.in_execution_phase = false  # Re-enable animation resets
 	Global.declare("Players' Turn")
 

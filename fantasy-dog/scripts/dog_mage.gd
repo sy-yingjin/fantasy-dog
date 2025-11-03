@@ -10,7 +10,7 @@ func _ready() -> void:
 	# fill up the needed information of the dog knight
 	maxHP = 100
 	maxMP = 100
-	currentHP = 10 # start at 1 HP for testing/low health
+	currentHP = 100 # start at 1 HP for testing/low health
 	currentMP = 100 # bar testing
 	player_name = "Mayge"
 	atk_1 = "Maggik"

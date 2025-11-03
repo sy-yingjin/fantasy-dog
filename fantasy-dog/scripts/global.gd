@@ -50,6 +50,8 @@ func player_turn_end() -> bool:
 	return turn_ended
 	
 func start_turn() -> void:
+	# Reset selection phase and set the first actor for the new player turn
+	turn_ended = false
 	if knight != null: 
 		current_player = knight
 	else:
