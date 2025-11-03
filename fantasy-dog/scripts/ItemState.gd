@@ -28,6 +28,8 @@ const ITEMS = [
 
 var character = null
 var is_rolling = false
+var rolled_item = null
+var item_selected = false
 
 func enter() -> void:
 	character = Global.get_current_player()
@@ -36,6 +38,9 @@ func enter() -> void:
 	item_display.show()
 	# show the explanation and display of item feature
 	item_label.text = "Press Accept to Roll!"
+	is_rolling = false
+	rolled_item = null
+	item_selected = false
 	print("ITEM STATE")
 
 func process_input(event: InputEvent):
@@ -44,30 +49,64 @@ func process_input(event: InputEvent):
 		return null
 
 	# change state based on button focus
-	if defend.has_focus():
+	if defend.has_focus() and not item_selected:
 		return defend_state
-	elif attack.has_focus():
+	elif attack.has_focus() and not item_selected:
 		return attack_state
 	if Input.is_action_just_pressed("ui_accept"):
-		# Roll and use item
-		_roll_and_use_item()
-		# action executed, wait for timer to end before proceed to next turn
-		return null
+		if not item_selected:
+			# Roll for item and show it to player
+			_roll_and_preview_item()
+			return null
+		else:
+			# Item has been rolled, now queue it
+			Global.add_action_to_queue(character, "item", rolled_item)
+			Global.declare("%s will use %s!" % [character.get_character_name(), rolled_item.name])
+			print("Character queued item: ", rolled_item.name)
+
+			# Move to next character or execution phase
+			Global.end_turn()
+			if !Global.player_turn_end():
+				# Next character's turn
+				return attack_state
+			else:
+				# Both characters selected, move to execution phase
+				return enemy_state
 
 func process_frame(delta: float):
-	if character and character.is_done():
-		Global.end_turn()
-		print("TURN ENDED", Global.player_turn_end())
-		if Global.battle_over:
-			return null
-		if !Global.player_turn_end():
-			return attack_state
-		else:
-			get_viewport().gui_release_focus()
-			Global.turn_ended = true
-			print("ENEMY'S TURN")
-			return enemy_state
 	return null
+
+
+func _roll_and_preview_item() -> void:
+	is_rolling = true
+	item_label.text = "Rolling..."
+
+	# Start animation if it's an AnimatedSprite2D
+	if item_sprite.is_playing():
+		item_sprite.stop()
+
+	# Animate rolling
+	var rng := RandomNumberGenerator.new()
+	rng.randomize()
+
+	# Quick spin animation
+	for i in range(10):
+		item_sprite.frame = rng.randi_range(0, 6)
+		await get_tree().create_timer(0.1).timeout
+
+	# Pick final item using weighted RNG
+	var final_item = _weighted_random_item()
+	item_sprite.frame = final_item.frame
+
+	# Stop any animation and keep it on the selected frame
+	if item_sprite.is_playing():
+		item_sprite.stop()
+
+	rolled_item = final_item
+	item_label.text = "%s\nPress Accept to confirm!" % final_item.name
+
+	is_rolling = false
+	item_selected = true
 
 
 func _roll_and_use_item() -> void:

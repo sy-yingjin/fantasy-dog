@@ -37,24 +37,21 @@ func process_input(event: InputEvent):
 		return attack_state
 	elif Input.is_action_just_pressed("ui_accept"):
 		if character:
-			character.defend()
-			Global.declare("%s defends!" % character.get_character_name())
-			character.finished_action()
-			print("Character uses defend!")
-			# action executed, wait for timer to end before proceed to next turn
-			defend.focus_mode = Control.FOCUS_NONE
+			# Queue the defend action instead of executing immediately
+			Global.add_action_to_queue(character, "defend", null)
+			Global.declare("%s will defend!" % character.get_character_name())
+			print("Character queued defend!")
+			# action queued, move to next turn
+			defend.focus_mode = Control.FOCUS_ALL
+
+			# Move to next character or execution phase
+			Global.end_turn()
+			if !Global.player_turn_end():
+				# Next character's turn
+				return attack_state
+			else:
+				# Both characters selected, move to execution phase
+				return enemy_state
 
 func process_frame(delta: float):
-	if character and character.is_done():
-		Global.end_turn()
-		print("TURN ENDED", Global.player_turn_end())
-		if Global.battle_over:
-			return null
-		if !Global.player_turn_end():
-			return attack_state
-		else:
-			get_viewport().gui_release_focus()
-			Global.turn_ended = true
-			print("ENEMY'S TURN")
-			return enemy_state
 	return null

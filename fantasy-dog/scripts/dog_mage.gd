@@ -78,7 +78,8 @@ func is_done() -> bool:
 
 func _process(type: float) -> void:
 	# if attack_sprite.is_playing():
-	if executed_action != "defend":
+	# Don't reset to default during execution phase
+	if executed_action != "defend" and not Global.in_execution_phase:
 		if Global.player_turn_end():
 			self.default()
 

@@ -17,6 +17,12 @@ var declare_label: Label
 var battle_over: bool = false
 var restarting: bool = false
 
+# Action queue system for both characters
+var action_queue: Array = []  # Array of dictionaries: {character: Player, action_type: String, target: Enemy}
+var current_action_index: int = 0
+var executing_actions: bool = false
+var in_execution_phase: bool = false  # Flag to prevent animation resets during execution
+
 # I made this global script to share variables among states and characters easier
 
 # Called when the node enters the scene tree for the first time.
@@ -45,14 +51,19 @@ func player_turn_end() -> bool:
 	
 func start_turn() -> void:
 	current_player = knight
-	
+	action_queue.clear()
+	current_action_index = 0
+	executing_actions = false
+	in_execution_phase = false
+
 func end_turn() -> void:
 	print("FROM GLOBAL, CURRENT PLAYER ", current_player)
 	if current_player == knight:
 		current_player = mage
 	elif current_player == mage:
-		current_player = knight
-		print("OWARIIII")
+		# Both characters have selected their actions
+		# Don't switch back to knight, instead mark that selection phase is done
+		print("BOTH CHARACTERS SELECTED ACTIONS")
 		turn_ended = true
 	
 func get_current_actor() -> Node:
@@ -80,6 +91,31 @@ func get_queued_action() -> String:
 		return "sub_atk_1"
 	else:
 		return "sub_atk_2"
+
+# Add an action to the queue
+func add_action_to_queue(character: Player, action_type: String, target = null) -> void:
+	action_queue.append({
+		"character": character,
+		"action_type": action_type,
+		"target": target
+	})
+	print("Action queued for %s: %s" % [character.get_character_name(), action_type])
+
+# Check if both characters have queued their actions
+func all_actions_queued() -> bool:
+	var knight_queued = false
+	var mage_queued = false
+	for action in action_queue:
+		if action["character"] == knight:
+			knight_queued = true
+		if action["character"] == mage:
+			mage_queued = true
+	return knight_queued and mage_queued
+
+# Execute all queued actions
+func execute_queued_actions() -> void:
+	executing_actions = true
+	current_action_index = 0
 
 func declare(text: String) -> void:
 	if declare_label:
@@ -113,6 +149,10 @@ func rebind_scene_nodes() -> bool:
 	queued_action = null
 	battle_over = false
 	restarting = false
+	action_queue.clear()
+	current_action_index = 0
+	executing_actions = false
+	in_execution_phase = false
 
 	# Bind declare label
 	declare_label = get_node_or_null("/root/Battle/Action Declare")

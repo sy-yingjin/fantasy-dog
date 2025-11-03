@@ -57,11 +57,9 @@ func enter() -> void:
 				grabbed = true
 		else:
 			b.focus_mode = Control.FOCUS_NONE
-		print("focus on ", b)
 	if not grabbed:
 		# Fallback: release focus if nothing is selectable
 		get_viewport().gui_release_focus()
-	print("SELECT ENEMIES")
 	
 	enemy_arrow.process_mode = enemy_arrow.PROCESS_MODE_ALWAYS
 
@@ -92,34 +90,32 @@ func process_input(event: InputEvent):
 		if idx >= 0:
 			var target = Global.enemy_list()[idx]
 			if target and target.is_alive():
-				# Set the target enemy from the enemy list
-				Global.target_enemy = target
-				# character does the queued action on selected enemy
-				character.attack(Global.get_queued_action())
-				character.finished_action()
+				# Queue the action instead of executing immediately
+				Global.add_action_to_queue(character, Global.get_queued_action(), target)
+				Global.declare("%s will use %s on %s!" % [
+					character.get_character_name(),
+					Global.get_queued_action(),
+					target.name
+				])
 			else:
 				# Ignore input if target is invalid/dead
 				return null
 
 		# allows menu cursor to function again and deselect enemy
 		Global.enemy_select = false
-
-			
-func process_frame(delta: float):
-	if character.is_done():
-		Global.end_turn()
-		print("TURN ENDED", Global.player_turn_end())
 		menu_cursor.process_mode = menu_cursor.PROCESS_MODE_ALWAYS
-		# If battle already ended during the action, stop here
-		if Global.battle_over:
-			return null
+
+		# Move to next character or execution phase
+		Global.end_turn()
 		if !Global.player_turn_end():
+			# Next character's turn
 			return attack_state
 		else:
-			get_viewport().gui_release_focus()
-			Global.turn_ended = true
-			print("ENEMY'S TURN")
+			# Both characters selected, move to execution phase
 			return enemy_state
+
+
+func process_frame(delta: float):
 	return null
 	
 	
