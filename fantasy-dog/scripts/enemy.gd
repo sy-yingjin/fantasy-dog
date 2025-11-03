@@ -9,17 +9,26 @@ var currentHP: float = 100.0
 func _ready() -> void:
 	currentHP = maxHP
 	animated_sprite.play("default")
+	# Connect animation_finished signal
+	animated_sprite.animation_finished.connect(_on_animated_sprite_animation_finished)
 
 
 func is_alive() -> bool:
 	return currentHP > 0.0
 
 
+func _on_animated_sprite_animation_finished() -> void:
+	# Return to default animation after damage, heal, or other animations finish
+	if animated_sprite.animation in ["damage", "healing", "defending"]:
+		print(name, " animation ", animated_sprite.animation, " finished, returning to default")
+		animated_sprite.play("default")
+
+
 func take_damage(damage: float) -> void:
 	currentHP = max(0.0, currentHP - damage)
 	print(name, " HP: ", currentHP, "/", maxHP)
+	print(name, " taking damage, playing damage animation")
 	animated_sprite.play("damage")
-	# Animation will return to default automatically
 
 	# Check for death
 	if currentHP <= 0.0:
@@ -53,6 +62,10 @@ func decide_action() -> void:
 
 
 func animate(type: int) -> void:
+	# Don't interrupt damage animation
+	if animated_sprite.animation == "damage":
+		return
+
 	if type == 1:
 		animated_sprite.play("defending")
 	elif type == 2:

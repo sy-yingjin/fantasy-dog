@@ -61,7 +61,9 @@ func defend() -> void:
 	animated_sprite.play("defend")
 
 func default() -> void:
-	animated_sprite.play("default")
+	# Don't interrupt damage animation
+	if animated_sprite.animation != "damage":
+		animated_sprite.play("default")
 	attack_sprite.play("default")
 	action_done = false
 
@@ -83,9 +85,16 @@ func _process(type: float) -> void:
 func _on_timer_timeout() -> void:
 	timer.stop()
 	action_done = true
-	
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	# Return to default animation after damage or other animations finish
+	if animated_sprite.animation == "damage":
+		print("Mage damage animation finished, returning to default")
+		animated_sprite.play("default")
+
 func take_damage(damage: float) -> void:
 	# do the damage logic from parent
+	print("Mage taking damage, playing damage animation")
 	animated_sprite.play("damage")
 	super(damage)
 	
