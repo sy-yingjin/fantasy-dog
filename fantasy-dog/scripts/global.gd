@@ -6,7 +6,7 @@ var mage
 var enemyA
 var enemyB
 var boss
-var current_player: Player = null
+var current_player : Player = null
 var target_enemy = null
 var turn_ended = false
 var existing_enemies = []
@@ -35,7 +35,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	print("CURRENT PLAYER", current_player)
 	
 func get_knight() -> Player:
 	return knight
@@ -50,7 +50,10 @@ func player_turn_end() -> bool:
 	return turn_ended
 	
 func start_turn() -> void:
-	current_player = knight
+	if knight != null: 
+		current_player = knight
+	else:
+		current_player = mage
 	action_queue.clear()
 	current_action_index = 0
 	executing_actions = false
@@ -58,12 +61,14 @@ func start_turn() -> void:
 
 func end_turn() -> void:
 	print("FROM GLOBAL, CURRENT PLAYER ", current_player)
-	if current_player == knight:
+	if current_player == knight and mage != null:
 		current_player = mage
 	elif current_player == mage:
 		# Both characters have selected their actions
 		# Don't switch back to knight, instead mark that selection phase is done
 		print("BOTH CHARACTERS SELECTED ACTIONS")
+		turn_ended = true
+	else:
 		turn_ended = true
 	
 func get_current_actor() -> Node:
@@ -142,6 +147,8 @@ func rebind_scene_nodes() -> bool:
 	# Set current player if missing
 	if knight != null:
 		current_player = knight
+	else: 
+		current_player = mage
 
 	# Reset runtime flags after binding
 	turn_ended = false
@@ -162,6 +169,16 @@ func rebind_scene_nodes() -> bool:
 		push_error("Could not find Action Declare label!")
 
 	return is_instance_valid(current_player)
+	
+func player_dead(dead: Player) -> void:
+	if dead == knight:
+		knight = null
+		current_player = mage
+		
+	elif dead == mage:
+		mage = null
+		current_player = knight
+	
 
 # Returns true if at least one enemy is still alive/present
 func _any_enemies_alive() -> bool:

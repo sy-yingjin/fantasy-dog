@@ -96,12 +96,18 @@ func get_last_damage_taken() -> float:
 
 # Handle player defeat: notify Global (subclasses can also hide themselves)
 func die() -> void:
+	currentMP = 0
+	updateBar.emit()
+	
 	# Announce defeat
 	if Global and Global.has_method("declare"):
 		Global.declare("%s is defeated!" % get_character_name())
-
+	
 	# Trigger end-of-battle check
 	if Global and Global.has_method("check_battle_end"):
 		Global.check_battle_end()
+		
+	Global.player_dead(self)
+	queue_free()
 	
 	

@@ -109,7 +109,7 @@ func enter() -> void:
 
 	# Return to player turn - reset to knight
 	Global.turn_ended = false
-	Global.current_player = Global.knight
+	#Global.current_player = Global.knight
 	Global.in_execution_phase = false  # Re-enable animation resets
 	Global.declare("Players' Turn")
 

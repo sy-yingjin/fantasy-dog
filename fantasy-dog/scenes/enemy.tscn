@@ -60,9 +60,6 @@ animations = [{
 "frames": [{
 "duration": 5.0,
 "texture": SubResource("AtlasTexture_aahqx")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xtyyt")
 }],
 "loop": true,
 "name": &"defending",
@@ -71,9 +68,6 @@ animations = [{
 "frames": [{
 "duration": 5.0,
 "texture": SubResource("AtlasTexture_w462x")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xtyyt")
 }],
 "loop": true,
 "name": &"healing",
@@ -86,5 +80,5 @@ script = ExtResource("1_yapdk")
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7mpok")
-animation = &"defending"
+animation = &"healing"
 autoplay = "default"
