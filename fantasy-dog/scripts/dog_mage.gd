@@ -47,11 +47,12 @@ func attack(type: String) -> void:
 	# Apply damage to target
 	if Global.target_enemy and Global.target_enemy.is_alive():
 		Global.target_enemy.take_damage(dmg)
+		var actual := int(Global.target_enemy.get_last_damage_taken()) if Global.target_enemy.has_method("get_last_damage_taken") else int(dmg)
 		Global.declare("%s uses %s! %s takes %d HP!" % [
 			player_name,
 			executed_action,
 			Global.target_enemy.name,
-			int(dmg)
+			actual
 		])
 	else:
 		Global.declare("%s uses %s!" % [player_name, executed_action])

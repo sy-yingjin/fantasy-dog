@@ -72,6 +72,11 @@ func enter() -> void:
 		if Global.battle_over:
 			return
 
+	# After players finish their actions, clear any enemy defend statuses
+	for e in Global.enemy_list():
+		if e and e.has_method("clear_defend"):
+			e.clear_defend()
+
 	# Now enemies act
 	Global.declare("Enemies' Turn")
 	await get_tree().create_timer(1.0).timeout

@@ -3,6 +3,8 @@ extends Node2D
 var maxHP: float = 100.0
 var currentHP: float = 100.0
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite
+var is_defending: bool = false
+var last_damage_taken: float = 0.0
 
 
 # Called when the node enters the scene tree for the first time.
@@ -25,7 +27,11 @@ func _on_animated_sprite_animation_finished() -> void:
 
 
 func take_damage(damage: float) -> void:
-	currentHP = max(0.0, currentHP - damage)
+	var final_damage := damage
+	if is_defending:
+		final_damage *= 0.5
+	last_damage_taken = final_damage
+	currentHP = max(0.0, currentHP - final_damage)
 	print(name, " HP: ", currentHP, "/", maxHP)
 	print(name, " taking damage, playing damage animation")
 	animated_sprite.play("damage")
@@ -39,7 +45,15 @@ func heal(amount: float) -> void:
 	currentHP = min(maxHP, currentHP + amount)
 	print(name, " healed. HP: ", currentHP, "/", maxHP)
 	animate(2)
-	Global.boss.animate(2)
+	# When healing self, do not animate the boss. Boss animation is handled only when explicitly healing the boss.
+
+func defend_self() -> void:
+	# Enable defend mitigation and play defend animation on this minion
+	is_defending = true
+	animate(1)
+
+func clear_defend() -> void:
+	is_defending = false
 
 
 func decide_action() -> void:
@@ -51,14 +65,24 @@ func decide_action() -> void:
 
 		if boss_hp_ratio < 0.4:  # Boss HP below 40%
 			boss.heal(15.0)
-			animate(2)  # Play healing animation
+			animate(2)  # Play healing animation on this minion
 			Global.declare("%s heals the Boss for 15 HP!" % name)
 			return
 
-	# Default action: Defend
-	animate(1)  # Play defending animation
-	Global.boss.animate(1)
-	Global.declare("%s is defending boss!" % name)
+		# Boss is alive and does not need healing: defend the boss
+		animate(1)  # Play defending animation on this minion
+		boss.animate(1)
+		Global.declare("%s is defending the Boss!" % name)
+		return
+
+	# If boss is absent or defeated: minions act for themselves
+	var self_hp_ratio = currentHP / maxHP
+	if self_hp_ratio < 0.4:
+		heal(15.0)
+		Global.declare("%s heals themself for 15 HP!" % name)
+	else:
+		defend_self()
+		Global.declare("%s is defending themself!" % name)
 
 
 func animate(type: int) -> void:
@@ -84,4 +108,7 @@ func die() -> void:
 		btn.visible = false
 	# Inform Global so the mapping (index -> enemy) nulls out
 	Global.remove_enemy(self)
+
+func get_last_damage_taken() -> float:
+	return last_damage_taken
 	
